@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*~
+
+# Claude Code local (machine-specific, never commit)
+.claude/settings.local.json
+
+# Bearings runtime marker, if it ever lands in-repo (normally in XDG state dir)
+.init-nudged

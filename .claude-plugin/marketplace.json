@@ -1,0 +1,14 @@
+{
+  "name": "parasanachaitanya99-plugins",
+  "owner": { "name": "Parasana Chaitanya", "url": "https://github.com/parasanachaitanya99" },
+  "description": "Plugins for keeping long-running Claude Code projects oriented.",
+  "plugins": [
+    {
+      "name": "orient",
+      "source": "./plugins/orient",
+      "description": "Know where you are in a codebase: current state, past decisions, and the why behind them.",
+      "category": "productivity",
+      "tags": ["documentation", "adr", "context"]
+    }
+  ]
+}

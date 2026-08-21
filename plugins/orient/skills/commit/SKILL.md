@@ -1,0 +1,58 @@
+---
+name: commit
+description: Draft a git commit message documenting what changed and why, with the findings that drove it, for review before committing.
+disable-model-invocation: true
+---
+
+# /orient:commit
+
+Draft a git commit message that documents what changed and why, present it for
+review, and commit only after explicit approval. User-invoked only.
+
+## 1. Determine what's staged
+Read `git diff --staged`. If nothing is staged, read `git diff` and `git status`,
+list the changed files, and ask which to stage. Never run `git add -A` unprompted.
+
+## 2. Draft the message
+Use this shape:
+
+```
+<type>(<scope>): <imperative summary, under 72 chars>
+
+What changed
+- <concrete, file-level, specific>
+
+Why
+- <the reasoning, not a restatement of the diff>
+
+Findings
+- <what was discovered while doing this: the actual root cause, the
+  measurement, the constraint hit, the thing that turned out not to
+  be true. Cite file:line or a command's output. If nothing was
+  discovered, omit this section entirely rather than padding it.>
+
+Trade-offs
+- <what was knowingly accepted, if any>
+
+Decision: ADR-NNNN   <- only when an ADR covers this change
+```
+
+## 3. Present and stop
+Show the full message and stop. State plainly that nothing has been committed. Offer
+three responses: approve, edit, or regenerate.
+
+## 4. Commit only after approval
+Commit only after explicit approval, using a heredoc to preserve formatting:
+
+```bash
+git commit -F - <<'EOF'
+<the approved message>
+EOF
+```
+
+Never `--amend`, never `push`, never `--no-verify`.
+
+## Anti-slop rules
+- No invented findings. If nothing was discovered, omit the Findings section.
+- No marketing adjectives. No "improved" or "enhanced" without a measurement.
+- If the change is trivial, a one-line message is the correct output.

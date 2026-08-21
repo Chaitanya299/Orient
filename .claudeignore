@@ -1,0 +1,10 @@
+# Paths Claude Code should not spend context reading or indexing.
+# Note: Claude Code does not natively enforce .claudeignore. The real
+# enforcement mechanisms are .gitignore (for git-aware operations) and
+# deny rules in .claude/settings.json. This file documents intent and is
+# honored by some community tooling.
+
+.git/
+.DS_Store
+.claude/settings.local.json
+.init-nudged

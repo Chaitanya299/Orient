@@ -1,0 +1,24 @@
+{
+  "name": "orient",
+  "displayName": "Orient",
+  "version": "0.1.0",
+  "description": "Know where you are in a codebase: current state, past decisions, and the why behind them — without burning context.",
+  "author": { "name": "Parasana Chaitanya", "url": "https://github.com/parasanachaitanya99" },
+  "repository": "https://github.com/parasanachaitanya99/orient",
+  "license": "MIT",
+  "keywords": ["documentation", "context", "adr", "decisions", "onboarding"],
+  "userConfig": {
+    "docs_dir": {
+      "type": "string",
+      "title": "Docs directory",
+      "description": "Where Orient keeps STATE.md, architecture.md and decisions/. Relative to the repo root.",
+      "default": "docs"
+    },
+    "auto_orient": {
+      "type": "boolean",
+      "title": "Orient at session start",
+      "description": "Inject the current focus from STATE.md when a session begins.",
+      "default": true
+    }
+  }
+}

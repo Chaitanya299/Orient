@@ -1,7 +1,7 @@
 # STATE — <!-- updated: 2026-08-19 -->
 
 ## Current focus
-Building v0.1.0 of the `bearings` plugin — six skills, two read-only subagents, one session-start hook, packaged in a marketplace repo.
+Building v0.1.0 of the `orient` plugin — six skills, two read-only subagents, one session-start hook, packaged in a marketplace repo.
 
 ## Done
 - Design settled. Decisions recorded as ADR-0001 through ADR-0007.

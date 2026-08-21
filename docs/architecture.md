@@ -1,7 +1,7 @@
 # Architecture
 
 ## Entry points
-Six skills, invoked as `/bearings:<name>`:
+Six skills, invoked as `/orient:<name>`:
 - `init` — user-only. Scaffolds the docs system into a repo; too consequential to fire on its own.
 - `commit` — user-only. Drafts a commit message behind an approval gate (ADR-0006).
 - `status`, `sync`, `decide`, `trace` — model-invocable. Safe for the model to reach for mid-task.
@@ -13,8 +13,8 @@ Six skills, invoked as `/bearings:<name>`:
 - `templates/` — what `init` writes into other people's repos. Never read by this repo at runtime; do not confuse with the docs this repo keeps for itself.
 
 ## Critical paths
-- `/bearings:init` → `repo-cartographer` surveys → draft docs → human approval → write.
-- `/bearings:commit` → read staged diff → draft message → approval gate → commit (ADR-0006).
+- `/orient:init` → `repo-cartographer` surveys → draft docs → human approval → write.
+- `/orient:commit` → read staged diff → draft message → approval gate → commit (ADR-0006).
 - session start → `orient.sh` → emit the current-focus block from `STATE.md`.
 
 ## The one rule that governs every change
