@@ -33,7 +33,7 @@ hook that prints just your current focus — and only in repos you've set up.
 ## Install
 
 ```
-/plugin marketplace add parasanachaitanya99/orient
+/plugin marketplace add Chaitanya299/Orient
 /plugin install orient@parasanachaitanya99-plugins
 ```
 
@@ -44,8 +44,8 @@ writes nothing until you approve.
 ### Try it without installing
 
 ```
-git clone https://github.com/parasanachaitanya99/orient
-claude --plugin-dir ./orient/plugins/orient
+git clone https://github.com/Chaitanya299/Orient
+claude --plugin-dir ./Orient/plugins/orient
 ```
 
 ## Skills

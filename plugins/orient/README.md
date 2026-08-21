@@ -19,7 +19,7 @@ never content, never `@imports`.
 ## Install
 
 ```
-/plugin marketplace add parasanachaitanya99/orient
+/plugin marketplace add Chaitanya299/Orient
 /plugin install orient@parasanachaitanya99-plugins
 ```
 
