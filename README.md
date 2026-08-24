@@ -20,9 +20,11 @@
 
 ---
 
-You open a repo you spent a month building, and it reads like someone else wrote it. You approved every change — one, then another, then a hundred more — but you can no longer say what is finished, what is half-wired, or why past-you chose this database over that one. You still own the project. You have quietly become its reviewer instead of its author.
+You've been building this with AI for months. It proposes, you approve, and the project keeps moving. Fast.
 
-Everyone who builds with AI hits this. orient is the fix we wanted and could not find: a small, honest record of what you are building that you and your AI keep together, so you stay the person who understands your own codebase, on day 90 as much as day 1.
+Then you try to remember why you chose this database over another, or whether that feature ever actually got finished, and you can't. Nothing was keeping track. Each decision lived in a conversation that scrolled away, and the reasoning went with it.
+
+orient is the fix. As you build, it keeps a small, honest record alongside your code: what's done, what's still half wired, what you're building next, and the reasoning behind the choices that got you here. So at any point you can open it and see exactly where your project stands and why, instead of reconstructing it from memory.
 
 ## What it actually does
 
