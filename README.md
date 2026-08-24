@@ -20,9 +20,9 @@
 
 ---
 
-Building with AI has a hidden cost: the faster it ships, the less you remember why. You approve a change, then another, then a hundred more. A few weeks in you open your own repo and it reads like a stranger's — you can't say what's actually finished, what's half-wired, or why past-you picked this database over that one. You still own the project, but somewhere along the way you became its reviewer instead of its author.
+You open a repo you spent a month building, and it reads like someone else wrote it. You approved every change — one, then another, then a hundred more — but you can no longer say what is finished, what is half-wired, or why past-you chose this database over that one. You still own the project. You have quietly become its reviewer instead of its author.
 
-Everyone building this way hits it. orient is the fix we wanted and couldn't find: a small, honest record of what you're building that you and your AI keep together — so you stay the person who understands your own codebase, on day 90 as much as day 1.
+Everyone who builds with AI hits this. orient is the fix we wanted and could not find: a small, honest record of what you are building that you and your AI keep together, so you stay the person who understands your own codebase, on day 90 as much as day 1.
 
 ## What it actually does
 
@@ -47,6 +47,8 @@ docs/
 /plugin marketplace add Chaitanya299/Orient
 /plugin install orient@chaitanya299-plugins
 ```
+
+Type those into Claude Code's prompt (they start with `/`). From a plain terminal instead, run `claude plugin marketplace add Chaitanya299/Orient` then `claude plugin install orient@chaitanya299-plugins`.
 
 Then, in a repo you want to track:
 
