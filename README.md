@@ -70,6 +70,11 @@ The `npx` installer has zero dependencies — it just copies the files into plac
 `--global` to install for every project). Prefer to copy them yourself? The manual
 steps are in each port's README: [opencode](./opencode/README.md), [Codex](./codex/README.md).
 
+> **Claude Code is different — use the marketplace, not npm.** Claude Code loads plugins
+> only through its marketplace (the two commands under Quickstart), never from `npm`. So
+> `npm i @chaitanya299/orient` sets up the opencode and Codex ports; for Claude Code, run
+> `claude plugin marketplace add Chaitanya299/Orient` then `claude plugin install orient@chaitanya299-plugins`.
+
 ## The six moves
 
 | Command | What it does |

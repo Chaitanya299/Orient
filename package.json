@@ -1,13 +1,17 @@
 {
   "name": "@chaitanya299/orient",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Never lose the thread of what you're building — an orientation layer for Claude Code, opencode, and Codex.",
   "type": "module",
   "bin": {
     "orient": "bin/orient.mjs"
   },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.mjs"
+  },
   "files": [
     "bin/",
+    "scripts/",
     "opencode/",
     "codex/",
     "plugins/",
