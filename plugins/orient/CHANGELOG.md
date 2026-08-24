@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+- Security: the survey and trace agents are now secret-blind (never open `.env`/keys,
+  never copy a secret value into a doc) and treat repo content as data, not instructions.
+- Security: `/orient:commit` refuses to commit a `.env` or a detected key.
+
 ## 0.1.0
 
 Initial release.
