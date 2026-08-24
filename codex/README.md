@@ -11,6 +11,15 @@ around.
 
 ## Install
 
+**Fastest** — the zero-dependency installer:
+
+```bash
+npx @chaitanya299/orient codex            # into ./.agents/skills
+npx @chaitanya299/orient codex --global   # into ~/.agents/skills
+```
+
+Or copy the files by hand.
+
 **Globally** (available in every repo you open):
 
 ```bash

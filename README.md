@@ -63,8 +63,12 @@ orient ships for all three major coding agents. Same behavior, native to each.
 | Agent | How it ships | Install |
 |---|---|---|
 | **Claude Code** | Marketplace plugin | Two commands above |
-| **opencode** | `.opencode` commands + agents | [opencode/README.md](./opencode/README.md) |
-| **Codex** | Native skills (`.agents/skills`) | [codex/README.md](./codex/README.md) |
+| **opencode** | `.opencode` commands + agents | `npx @chaitanya299/orient opencode` |
+| **Codex** | Native skills (`.agents/skills`) | `npx @chaitanya299/orient codex` |
+
+The `npx` installer has zero dependencies — it just copies the files into place (add
+`--global` to install for every project). Prefer to copy them yourself? The manual
+steps are in each port's README: [opencode](./opencode/README.md), [Codex](./codex/README.md).
 
 ## The six moves
 
@@ -78,6 +82,13 @@ orient ships for all three major coding agents. Same behavior, native to each.
 | `trace` | Follow one execution path, with `file:line` references. |
 
 *(Claude Code uses `/orient:status`, opencode `/orient-status`, Codex `$orient-status` — same six everywhere.)*
+
+## See it in action
+
+orient runs on itself. Browse [`docs/`](./docs) in this repo to see exactly what it
+produces on a real project — a live [`STATE.md`](./docs/STATE.md), an
+[`architecture.md`](./docs/architecture.md), and a full
+[decision log](./docs/decisions) you can read end to end. That folder is the example.
 
 ## Why it stays cheap
 

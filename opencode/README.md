@@ -9,6 +9,15 @@ files you drop into your opencode config.
 
 ## Install
 
+**Fastest** — the zero-dependency installer:
+
+```bash
+npx @chaitanya299/orient opencode            # into ./.opencode
+npx @chaitanya299/orient opencode --global   # into ~/.config/opencode
+```
+
+Or copy the files by hand.
+
 **Globally** (available in every project):
 
 ```bash

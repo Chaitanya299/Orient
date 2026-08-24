@@ -13,6 +13,13 @@
 # Orient runtime marker, if it ever lands in-repo (normally in XDG state dir)
 .init-nudged
 
+# Internal publishing notes — kept local, not shipped in the public repo
+PUBLISHING.md
+
+# npm
+node_modules/
+*.tgz
+
 # Secrets — never commit. orient generates none of these; these rules protect
 # anyone who forks this repo or works alongside it from an accidental leak.
 .env

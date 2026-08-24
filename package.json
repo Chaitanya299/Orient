@@ -1,0 +1,41 @@
+{
+  "name": "@chaitanya299/orient",
+  "version": "0.1.0",
+  "description": "Never lose the thread of what you're building — an orientation layer for Claude Code, opencode, and Codex.",
+  "type": "module",
+  "bin": {
+    "orient": "bin/orient.mjs"
+  },
+  "files": [
+    "bin/",
+    "opencode/",
+    "codex/",
+    "plugins/",
+    "README.md",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=16.7"
+  },
+  "keywords": [
+    "claude-code",
+    "opencode",
+    "codex",
+    "plugin",
+    "skills",
+    "adr",
+    "documentation",
+    "context",
+    "onboarding"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chaitanya299/Orient.git"
+  },
+  "homepage": "https://github.com/Chaitanya299/Orient#readme",
+  "bugs": {
+    "url": "https://github.com/Chaitanya299/Orient/issues"
+  },
+  "author": "Parasana Chaitanya (https://github.com/Chaitanya299)",
+  "license": "MIT"
+}
