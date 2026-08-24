@@ -20,7 +20,7 @@
 
 ---
 
-You've been building this with AI for months. It proposes, you approve, and the project keeps moving. Fast.
+You've been building projects with AI for months. It proposes, you approve, and the project keeps moving. Fast.
 
 Then you try to remember why you chose this database over another, or whether that feature ever actually got finished, and you can't. Nothing was keeping track. Each decision lived in a conversation that scrolled away, and the reasoning went with it.
 
@@ -31,7 +31,7 @@ orient is the fix. As you build, it keeps a small, honest record alongside your 
 orient gives your project three things it was missing:
 
 - **A `STATE.md` that always answers "where am I?"** — current focus, what's done, what's blocked. One glance instead of an archaeology dig through commits.
-- **A decision log that keeps the *why*.** Every real architectural call becomes a short, append-only record (an ADR), so "why did we drop SQLite?" has an answer six months later instead of a shrug. `init` even reads your git history and drafts candidate ADRs from the commits that look like real turning points, so you don't start from a blank page — you approve each one.
+- **A decision log that keeps the *why*.** Every real architectural call becomes a short, append-only record (an ADR), so "why did we drop SQLite?" has an answer six months later instead of a shrug. orient offers to log a decision the moment you make one — you don't have to remember — and it updates your architecture notes to match. `init` even mines your git history and drafts candidate ADRs from the commits that look like real turning points, so you don't start from a blank page. You approve each one.
 - **Answers on demand, never stale docs.** Trace a request through the code, or check where things stand, in a single command — instead of maintaining diagrams that rot the moment the code changes.
 
 All of it lives in files that cost nothing until something reads them, with only ~14 lines of pointers in your instructions file. Nothing preloaded, nothing crowding the work.
@@ -79,16 +79,20 @@ steps are in each port's README: [opencode](./opencode/README.md), [Codex](./cod
 > `npm i @chaitanya299/orient` sets up the opencode and Codex ports; for Claude Code, run
 > `claude plugin marketplace add Chaitanya299/Orient` then `claude plugin install orient@chaitanya299-plugins`.
 
-## The six moves
+## The workflow — the six commands, in the order you use them
 
-| Command | What it does |
-|---|---|
-| `init` | Scaffold or repair the docs system, seeding candidate ADRs from your git history. Once per project. |
-| `status` | Where things stand, read from `STATE.md` alone. Nearly free. |
-| `sync` | Update `STATE.md` to match what actually changed this session. |
-| `decide` | Record an architectural decision as a numbered ADR. |
-| `commit` | Draft a commit message (what / why / findings) for review. |
-| `trace` | Follow one execution path, with `file:line` references. |
+| When | Command | What it does |
+|---|---|---|
+| Once per project | `init` | Scaffold the docs and seed ADRs from your git history. |
+| Start of a session | `status` | "Where am I?" Reads STATE.md alone. Nearly free. |
+| While building | `trace` | Understand how one path runs, on demand, with `file:line` refs. |
+| When you decide something | `decide` | Record the *why* as an ADR, and update architecture.md to match. |
+| Before you commit | `commit` | Draft a what / why / findings message for review. |
+| End of a session | `sync` | Update STATE.md to match what actually changed. |
+
+You won't run all six every day. The two you'll lean on most are `status` (to pick up
+where you left off) and `decide` (so the reasoning never scrolls away) — and orient offers
+`decide` on its own the moment you make a real decision, so you just say yes.
 
 *(Claude Code uses `/orient:status`, opencode `/orient-status`, Codex `$orient-status` — same six everywhere.)*
 

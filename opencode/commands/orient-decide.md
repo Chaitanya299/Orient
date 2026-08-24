@@ -1,19 +1,15 @@
 ---
-description: Record an architectural decision as a numbered ADR file, capturing why it was chosen over the alternatives.
+description: Record an architectural decision as an ADR and update architecture.md to match. Use right after a decision is made.
 ---
 
-Record one architectural decision as a numbered, append-only ADR.
+Record one architectural decision as a numbered, append-only ADR in `docs/decisions/`.
 
-The docs directory is `docs` unless an argument overrides it (`$ARGUMENTS`).
-
-1. Find the highest existing ADR number in `<docs_dir>/decisions/` and add one.
-   Filenames are `NNNN-kebab-title.md`, numbered from 0001.
-2. Fill the ADR shape (Context / Decision / Why over alternatives / Trade-offs /
-   Consequences). Interview the user **only** for what can't be inferred from the
-   session — the alternatives considered and the trade-off accepted are the parts
-   worth asking about. Infer the rest.
-3. Show the drafted ADR and write it on approval.
-
-Supersede rule: if this decision supersedes an earlier ADR, set `Supersedes:` in the
-new file and update **only** the `Superseded by:` line of the old one. No other edit
-to a past ADR is permitted — decisions are append-only.
+1. Next number after the highest in `docs/decisions/` (`NNNN-kebab-title.md`, from 0001).
+2. Fill the ADR: Context / Decision / Why over alternatives / Trade-offs / Consequences.
+   Interview the user only for the alternatives considered and the trade-off accepted —
+   infer the rest from the session. Show it, write on approval.
+3. Supersede rule: never edit a past ADR except its `Superseded by:` line.
+4. Then check `docs/architecture.md`. If this decision changes entry points, module
+   boundaries, or critical paths, draft the edit (touch only affected lines, refresh the
+   `updated:` marker), show a before/after preview, and write it only after a **separate**
+   approval. If `architecture.md` is missing or the decision isn't structural, skip this.

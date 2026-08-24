@@ -30,8 +30,8 @@ real use and validation.
   Codex by packaging the skills and using the OpenAI portal (see local PUBLISHING.md).
 
 ## Blocked / needs research
-- Do the skill descriptions trigger reliably? Only learnable from real use — plan a
-  tuning pass after a week.
+- Does the proactive decision-capture actually fire in practice? Shipped in 0.1.2
+  (ADR-0010); needs a week of real use to confirm the agent offers `decide` reliably.
 - Does `scripts/orient.sh` work under Git Bash and WSL on Windows? Untested.
 - package.json vs plugin.json versions can drift (ADR-0009 trade-off) — settle a sync policy.
 

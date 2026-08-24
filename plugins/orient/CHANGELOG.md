@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2
+
+- `decide` now offers to record a decision proactively when one is made in conversation,
+  instead of waiting to be invoked.
+- `decide` keeps `architecture.md` in sync: after the ADR, it previews a matching edit to
+  the architecture doc for approval.
+- opencode command prompts trimmed so invoking one no longer dumps a wall of instructions
+  into the chat.
+
 ## 0.1.1
 
 - Security: the survey and trace agents are now secret-blind (never open `.env`/keys,

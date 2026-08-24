@@ -94,7 +94,7 @@ The whole flow is a proposal the user approves, not a silent write.
 ## Workflow
 
 - Update `$DOCS_DIR/STATE.md` before reporting a task complete.
-- Record a real design decision as a new numbered ADR (the orient-decide skill).
+- When a real architectural decision is made in conversation, proactively offer to record it as an ADR (the orient-decide skill) — don't wait to be asked. It also updates architecture.md.
 - Never edit a past decision file. Supersede it with a new one.
 - Trace execution paths on demand (the orient-trace skill) instead of maintaining a flow doc.
 <!-- ORIENT:END -->

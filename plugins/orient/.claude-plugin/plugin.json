@@ -1,7 +1,7 @@
 {
   "name": "orient",
   "displayName": "Orient",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Know where you are in a codebase: current state, past decisions, and the why behind them — without burning context.",
   "author": { "name": "Parasana Chaitanya", "url": "https://github.com/Chaitanya299" },
   "repository": "https://github.com/Chaitanya299/Orient",
