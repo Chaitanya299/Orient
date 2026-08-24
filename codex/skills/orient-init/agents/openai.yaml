@@ -1,0 +1,4 @@
+# orient-init writes files, so it must never fire implicitly.
+# Explicit invocation ($orient-init) still works.
+policy:
+  allow_implicit_invocation: false

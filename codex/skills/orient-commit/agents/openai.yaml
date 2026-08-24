@@ -1,0 +1,4 @@
+# orient-commit runs git commit, so it must never fire implicitly.
+# Explicit invocation ($orient-commit) still works.
+policy:
+  allow_implicit_invocation: false
