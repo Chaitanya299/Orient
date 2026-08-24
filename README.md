@@ -1,72 +1,116 @@
-# orient
+<h1 align="center">orient</h1>
 
-**Know where you are in a codebase** — what's built, what's in progress, what's blocked,
-and the *why* behind past decisions — without burning context on every session.
+<p align="center">
+  <em>Never lose the thread of what you're building.</em>
+</p>
 
-A Claude Code plugin, distributed through this marketplace repo.
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
+  <img src="https://img.shields.io/badge/Claude_Code-plugin-D97757.svg" alt="Claude Code plugin" />
+  <img src="https://img.shields.io/badge/opencode-commands-000000.svg" alt="opencode commands" />
+  <img src="https://img.shields.io/badge/Codex-skills-10A37F.svg" alt="Codex skills" />
+  <img src="https://img.shields.io/badge/network-none-brightgreen.svg" alt="No network" />
+  <img src="https://img.shields.io/badge/telemetry-zero-brightgreen.svg" alt="Zero telemetry" />
+</p>
 
-## The problem
+<p align="center">
+  <b>A living map of what you're building — where it stands, the decisions you made, and the <i>why</i> behind them.</b><br/>
+  Kept cheap enough that it never gets in your way, or your agent's.
+</p>
 
-On a large, long-running repo, orientation lives nowhere reliable. Either there are no
-docs and every session re-derives the same context, or there's a pile of docs that go
-stale or grow so long they cost real tokens on every launch and drown out your actual
-instructions.
+---
 
-`CLAUDE.md` loads in full into *every* session. Content you put there is a permanent tax.
+Building with AI has a hidden cost: the faster it ships, the less you remember why. You approve a change, then another, then a hundred more. A few weeks in you open your own repo and it reads like a stranger's — you can't say what's actually finished, what's half-wired, or why past-you picked this database over that one. You still own the project, but somewhere along the way you became its reviewer instead of its author.
 
-## What orient does
+Everyone building this way hits it. orient is the fix we wanted and couldn't find: a small, honest record of what you're building that you and your AI keep together — so you stay the person who understands your own codebase, on day 90 as much as day 1.
 
-It scaffolds a small docs system whose real content costs **zero tokens until something
-reads it**, and writes only ~20 lines of *pointers* into `CLAUDE.md` — never content,
-never `@imports`. State, decisions, and architecture live in files that load on demand:
+## What it actually does
+
+orient gives your project three things it was missing:
+
+- **A `STATE.md` that always answers "where am I?"** — current focus, what's done, what's blocked. One glance instead of an archaeology dig through commits.
+- **A decision log that keeps the *why*.** Every real architectural call becomes a short, append-only record (an ADR), so "why did we drop SQLite?" has an answer six months later instead of a shrug. `init` even reads your git history and drafts candidate ADRs from the commits that look like real turning points, so you don't start from a blank page — you approve each one.
+- **Answers on demand, never stale docs.** Trace a request through the code, or check where things stand, in a single command — instead of maintaining diagrams that rot the moment the code changes.
+
+All of it lives in files that cost nothing until something reads them, with only ~14 lines of pointers in your instructions file. Nothing preloaded, nothing crowding the work.
 
 ```
 docs/
-  STATE.md          # current focus, what's done, what's blocked
+  STATE.md          # what's built, in progress, blocked  (read this first)
   architecture.md   # entry points and module boundaries
-  decisions/        # one append-only ADR per architectural decision
+  decisions/        # one append-only ADR per real decision
 ```
 
-The always-on footprint is a handful of short skill descriptions and a session-start
-hook that prints just your current focus — and only in repos you've set up.
-
-## Install
+## Quickstart (Claude Code)
 
 ```
 /plugin marketplace add Chaitanya299/Orient
-/plugin install orient@parasanachaitanya99-plugins
+/plugin install orient@chaitanya299-plugins
 ```
 
-Then, in a repo you want to track, **run `/orient:init` first**. It surveys the repo in
-a subagent (up to ~a minute on a big one), shows you everything it plans to write, and
-writes nothing until you approve.
-
-### Try it without installing
+Then, in a repo you want to track:
 
 ```
-git clone https://github.com/Chaitanya299/Orient
-claude --plugin-dir ./Orient/plugins/orient
+/orient:init
 ```
 
-## Skills
+It surveys your repo in a read-only subagent, shows you **everything** it plans to write, and writes nothing until you approve. From then on, you and your agent work from one clear picture of what you're building.
+
+## One idea, three agents
+
+orient ships for all three major coding agents. Same behavior, native to each.
+
+| Agent | How it ships | Install |
+|---|---|---|
+| **Claude Code** | Marketplace plugin | Two commands above |
+| **opencode** | `.opencode` commands + agents | [opencode/README.md](./opencode/README.md) |
+| **Codex** | Native skills (`.agents/skills`) | [codex/README.md](./codex/README.md) |
+
+## The six moves
 
 | Command | What it does |
 |---|---|
-| `/orient:init` | Scaffold or repair the docs system. Run once per project. |
-| `/orient:status` | Where the project stands, read from `STATE.md` alone. |
-| `/orient:sync` | Update `STATE.md` to match what actually changed this session. |
-| `/orient:decide` | Record an architectural decision as a numbered ADR. |
-| `/orient:commit` | Draft a commit message (what / why / findings) for review. |
-| `/orient:trace` | Trace one execution path on demand, with `file:line` references. |
+| `init` | Scaffold or repair the docs system, seeding candidate ADRs from your git history. Once per project. |
+| `status` | Where things stand, read from `STATE.md` alone. Nearly free. |
+| `sync` | Update `STATE.md` to match what actually changed this session. |
+| `decide` | Record an architectural decision as a numbered ADR. |
+| `commit` | Draft a commit message (what / why / findings) for review. |
+| `trace` | Follow one execution path, with `file:line` references. |
 
-Full details, configuration, and limitations: **[plugins/orient/README.md](./plugins/orient/README.md)**.
+*(Claude Code uses `/orient:status`, opencode `/orient-status`, Codex `$orient-status` — same six everywhere.)*
 
-## Limitations
+## Why it stays cheap
 
-Docs are context, not enforcement. orient makes the right thing cheap and easy, but it
-can't *make* anyone keep `STATE.md` current. Anything that must hold — an invariant, a
-convention — belongs in a test, a lint rule, or a hook, not a doc.
+Your instructions file loads in full into every session, and long files measurably reduce how well a model follows any single instruction. So orient keeps its always-on footprint to a handful of short pointers. Everything substantial — state, decisions, architecture — lives in files that only load when read. That's the whole trick, and it's why orient holds up on a repo that's been alive for years.
+
+## Secure by design
+
+orient runs on your machine and reads your repos, so it's built to be safe with them:
+
+- **No network. No telemetry.** It cannot send your code anywhere.
+- **Read-only survey agents** — they analyze, never modify.
+- **Secret-blind** — the agents never open `.env`/keys and never copy a secret value into a committed doc.
+- **`commit` won't ship a secret** — it refuses to commit a `.env` or a detected key.
+- **Nothing writes silently** — every write is a proposal you approve.
+
+Full details and the reusable `.env` standard: [SECURITY.md](./SECURITY.md).
+
+## FAQ
+
+**Does it work on a huge, old repo?**
+That's the point. The bigger the repo, the more you save by not re-deriving its context every session.
+
+**Will it bloat my `CLAUDE.md` / `AGENTS.md`?**
+No. It adds ~14 lines of pointers between markers, and never touches anything outside them. Re-running `init` never duplicates the block.
+
+**Does it change my code?**
+Never without asking. The survey and trace agents are read-only; the writing commands draft first and wait for your yes.
+
+**What if I don't keep the docs current?**
+Then they're just context, not enforcement — orient makes the right thing cheap, but a convention that *must* hold belongs in a test or a hook, not a doc. `sync` exists to make staying current a one-command habit.
 
 ## License
 
-MIT — see [plugins/orient/LICENSE](./plugins/orient/LICENSE).
+MIT, by [Chaitanya299](https://github.com/Chaitanya299). See [LICENSE](./plugins/orient/LICENSE).
+
+*by ~ Chaitanya♥️*
