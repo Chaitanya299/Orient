@@ -37,6 +37,9 @@ From the survey, draft (do not write yet):
 - `$DOCS_DIR/decisions/0001-record-architecture-decisions.md` — the ADR that establishes
   the practice, from `templates/adr.md`.
 
+Never write a secret value into any doc. If the survey surfaced credentials, name the
+file, not its contents — these docs get committed and pushed.
+
 ## 5. Seed candidate ADRs from git history
 Read `git log --oneline -n 200`. Identify commits that look like real architectural
 decisions — dependency additions, framework or database choices, auth or API

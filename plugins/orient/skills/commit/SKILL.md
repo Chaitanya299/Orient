@@ -9,6 +9,15 @@ disable-model-invocation: true
 Draft a git commit message that documents what changed and why, present it for
 review, and commit only after explicit approval. User-invoked only.
 
+## 0. Secret gate (run first)
+Before anything else, refuse to commit a secret. From `git diff --staged`:
+- If a staged file is a `.env` (any name except `*.example`), STOP.
+- If the staged diff contains a secret literal — `AKIA[0-9A-Z]{16}`, `ghp_[A-Za-z0-9]{36}`,
+  `sk-[A-Za-z0-9]{20,}`, or `-----BEGIN [A-Z ]*PRIVATE KEY-----` — STOP.
+
+On a match: name the file and line, tell the user to unstage it
+(`git restore --staged <file>`) and rotate the key. Never commit it, never work around this.
+
 ## 1. Determine what's staged
 Read `git diff --staged`. If nothing is staged, read `git diff` and `git status`,
 list the changed files, and ask which to stage. Never run `git add -A` unprompted.

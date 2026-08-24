@@ -10,5 +10,19 @@
 # Claude Code local (machine-specific, never commit)
 .claude/settings.local.json
 
-# Bearings runtime marker, if it ever lands in-repo (normally in XDG state dir)
+# Orient runtime marker, if it ever lands in-repo (normally in XDG state dir)
 .init-nudged
+
+# Secrets — never commit. orient generates none of these; these rules protect
+# anyone who forks this repo or works alongside it from an accidental leak.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+id_rsa*
+*.credentials
+.aws/
+.ssh/
+secrets/
