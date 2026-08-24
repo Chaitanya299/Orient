@@ -19,6 +19,7 @@ PUBLISHING.md
 # npm
 node_modules/
 *.tgz
+package-lock.json
 
 # Secrets — never commit. orient generates none of these; these rules protect
 # anyone who forks this repo or works alongside it from an accidental leak.
