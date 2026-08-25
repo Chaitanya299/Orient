@@ -16,5 +16,6 @@ Resolve the docs directory from `CLAUDE_PLUGIN_OPTION_DOCS_DIR` (default `docs`)
 
 Show the diff and get approval before writing.
 
-Keep the file under 60 lines. When Done grows long, condense old entries into a
-one-line summary rather than letting the file grow forever.
+Keep the file under 70 lines, and preserve the `## Shape` diagram — don't drop it when
+condensing. When Done grows long, condense old entries into a one-line summary rather than
+letting the file grow forever.

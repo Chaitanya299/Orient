@@ -22,6 +22,13 @@ On a match: name the file and line, tell the user to unstage it
 Read `git diff --staged`. If nothing is staged, read `git diff` and `git status`,
 list the changed files, and ask which to stage. Never run `git add -A` unprompted.
 
+## 1b. Backstop: check for an unrecorded decision
+If the staged diff shows a structural change — a new module or service, a swapped
+dependency or datastore, a changed module boundary — and no matching ADR exists in the
+decisions directory, say so and offer to record it with `/orient:decide` before drafting
+the message. This catches decisions the proactive offer missed. If the user declines, or
+the change isn't structural, continue.
+
 ## 2. Draft the message
 Use this shape:
 

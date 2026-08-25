@@ -41,7 +41,8 @@ files (`.env*` except `.env.example`, `*.pem`, `*.key`, `id_rsa*`, `credentials`
 From the survey, draft (do not write yet) these files, using the skeletons at the
 bottom. Fill `<...>` placeholders and date the `updated:` marker.
 
-- `$DOCS_DIR/STATE.md` — `## Current focus` first.
+- `$DOCS_DIR/STATE.md` — `## Current focus` first; fill the `## Shape` mermaid diagram
+  from the survey (major components and how they connect, 6 nodes max, not a call graph).
 - `$DOCS_DIR/architecture.md` — entry points, module boundaries, the three or four
   critical paths. Not a call graph, not a file listing.
 - `$DOCS_DIR/decisions/0001-record-architecture-decisions.md` — the ADR that
@@ -93,8 +94,9 @@ The whole flow is a proposal the user approves, not a silent write.
 
 ## Workflow
 
-- Update `$DOCS_DIR/STATE.md` before reporting a task complete.
+- Before reporting a task complete: update `$DOCS_DIR/STATE.md`, and if an architectural decision was made with no ADR recorded, offer to record it.
 - When a real architectural decision is made in conversation, proactively offer to record it as an ADR (the orient-decide skill) — don't wait to be asked. It also updates architecture.md.
+- When a plan is approved before a build, treat any architectural choices inside it as decisions — offer to record them before starting.
 - Never edit a past decision file. Supersede it with a new one.
 - Trace execution paths on demand (the orient-trace skill) instead of maintaining a flow doc.
 <!-- ORIENT:END -->
@@ -107,6 +109,13 @@ The whole flow is a proposal the user approves, not a silent write.
 
 ## Current focus
 <the one thing being worked on right now, in a sentence>
+
+## Shape
+```mermaid
+flowchart TD
+  %% High-level map: the major components (6 nodes max) and how they connect.
+  %% Not a call graph.
+```
 
 ## Done
 - <shipped and working>

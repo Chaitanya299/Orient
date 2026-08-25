@@ -9,7 +9,9 @@ Record one architectural decision as a numbered, append-only ADR in `docs/decisi
    Interview the user only for the alternatives considered and the trade-off accepted —
    infer the rest from the session. Show it, write on approval.
 3. Supersede rule: never edit a past ADR except its `Superseded by:` line.
-4. Then check `docs/architecture.md`. If this decision changes entry points, module
-   boundaries, or critical paths, draft the edit (touch only affected lines, refresh the
-   `updated:` marker), show a before/after preview, and write it only after a **separate**
-   approval. If `architecture.md` is missing or the decision isn't structural, skip this.
+4. If this decision changes structure (entry points, module boundaries, critical paths),
+   update both — each as a before/after preview, written only after a **separate** approval:
+   `docs/architecture.md` (affected lines only, refresh `updated:`), and the `## Shape`
+   mermaid diagram in `docs/STATE.md` (if a major component was added, removed, or
+   reconnected; 6 nodes max). Skip whichever doesn't exist, and skip all of step 4 for a
+   non-structural decision.

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3
+
+- `decide` now also fires on plan approval: when a plan is approved before a build, the
+  agent offers to record the architectural choices in it. Plus backstops — a check before
+  a task is reported complete, and `commit` flags a structural change with no matching ADR.
+- `STATE.md` gains a `## Shape` section: a high-level mermaid diagram of the system, filled
+  by `init` and kept current by `decide`.
+- README documents the update gotcha: re-run `init` after updating to refresh the block.
+
 ## 0.1.2
 
 - `decide` now offers to record a decision proactively when one is made in conversation,

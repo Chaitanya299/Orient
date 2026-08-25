@@ -110,6 +110,17 @@ produces on a real project — a live [`STATE.md`](./docs/STATE.md), an
 [`architecture.md`](./docs/architecture.md), and a full
 [decision log](./docs/decisions) you can read end to end. That folder is the example.
 
+## Updating
+
+When you update the plugin or the npm package, orient's files change — but the block it
+already wrote into your project's `CLAUDE.md` / `AGENTS.md` does **not**. To pick up new
+behavior (like a smarter `decide`), **re-run `init` in each tracked project**. It's safe:
+it only replaces the text between the `ORIENT` markers, and never touches your `STATE.md`
+or existing ADRs.
+
+- **Claude Code:** `claude plugin update orient@chaitanya299-plugins`, restart, then re-run `/orient:init`.
+- **opencode / Codex:** `npx @chaitanya299/orient@latest opencode` (or `codex`), then re-run init.
+
 ## Why it stays cheap
 
 Your instructions file loads in full into every session, and long files measurably reduce how well a model follows any single instruction. So orient keeps its always-on footprint to a handful of short pointers. Everything substantial — state, decisions, architecture — lives in files that only load when read. That's the whole trick, and it's why orient holds up on a repo that's been alive for years.

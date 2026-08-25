@@ -20,10 +20,13 @@ Supersede rule: if this decision supersedes an earlier ADR, set `Supersedes:` in
 new file and update **only** the `Superseded by:` line of the old one. No other edit
 to a past ADR is permitted — decisions are append-only.
 
-## Keep architecture.md in sync
-After the ADR is written, read `<docs_dir>/architecture.md`. If this decision changes
-what it describes — entry points, module boundaries, or critical paths — draft the
-specific edit: touch only the affected lines and refresh the `updated:` marker. Show a
-before/after preview and write it **only after a separate approval** — the user can accept
-the ADR but decline the architecture change. If `architecture.md` does not exist, or the
-decision isn't structural, skip this step silently.
+## Keep architecture and the shape diagram in sync
+After the ADR is written, check whether this decision changes structure — entry points,
+module boundaries, or critical paths. If so, update two things, each shown as a
+before/after preview and written **only after a separate approval** (the user can accept
+the ADR but decline these):
+- `<docs_dir>/architecture.md` — touch only the affected lines, refresh the `updated:` marker.
+- the `## Shape` mermaid diagram in `<docs_dir>/STATE.md` — only if the decision adds,
+  removes, or reconnects a major component. Keep it to 6 nodes.
+
+Skip whichever target doesn't exist, and skip the whole step for a non-structural decision.

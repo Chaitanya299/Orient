@@ -32,6 +32,8 @@ point is that the survey burns the subagent's context window, not this one.
 ## 4. Draft the core docs
 From the survey, draft (do not write yet):
 - `$DOCS_DIR/STATE.md` — from the `templates/STATE.md` shape, `## Current focus` first.
+  Fill the `## Shape` mermaid diagram from the survey: the major components and how they
+  connect, 6 nodes max. Not a call graph.
 - `$DOCS_DIR/architecture.md` — from `templates/architecture.md`: entry points, module
   boundaries, the three or four critical paths. Not a call graph, not a file listing.
 - `$DOCS_DIR/decisions/0001-record-architecture-decisions.md` — the ADR that establishes
