@@ -7,7 +7,9 @@
     "orient": "bin/orient.mjs"
   },
   "scripts": {
-    "postinstall": "node scripts/postinstall.mjs"
+    "postinstall": "node scripts/postinstall.mjs",
+    "check-version": "node scripts/check-version.mjs",
+    "prepublishOnly": "node scripts/check-version.mjs"
   },
   "files": [
     "bin/",

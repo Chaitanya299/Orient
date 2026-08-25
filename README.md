@@ -45,12 +45,19 @@ docs/
 
 ## Quickstart (Claude Code)
 
+**Inside Claude Code** — paste these at the `/` prompt:
+
 ```
 /plugin marketplace add Chaitanya299/Orient
 /plugin install orient@chaitanya299-plugins
 ```
 
-Type those into Claude Code's prompt (they start with `/`). From a plain terminal instead, run `claude plugin marketplace add Chaitanya299/Orient` then `claude plugin install orient@chaitanya299-plugins`.
+**From your terminal** — run once:
+
+```bash
+claude plugin marketplace add Chaitanya299/Orient
+claude plugin install orient@chaitanya299-plugins
+```
 
 Then, in a repo you want to track:
 

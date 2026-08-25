@@ -33,7 +33,6 @@ real use and validation.
 - Does the proactive decision-capture actually fire in practice? Shipped in 0.1.2
   (ADR-0010); needs a week of real use to confirm the agent offers `decide` reliably.
 - Does `scripts/orient.sh` work under Git Bash and WSL on Windows? Untested.
-- package.json vs plugin.json versions can drift (ADR-0009 trade-off) — settle a sync policy.
 
 ## Known issues
 - npm 0.1.0 shipped with a self-dependency; fixed in the tree and in 0.1.1, not yet republished.
