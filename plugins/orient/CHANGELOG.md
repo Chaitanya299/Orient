@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.5
+
+- The pre-commit hook's reminder is now a bold, boxed banner (coloured when the terminal
+  supports it, plain in logs/CI) instead of one easy-to-miss line. Same behavior otherwise:
+  non-blocking by default, `ORIENT_BLOCK=1` to block, `--no-verify` to skip.
+
+## 0.1.4
+
+- New opt-in git `pre-commit` hook (`scripts/pre-commit.sh`): when a dependency or build
+  manifest is staged with no ADR, it prints a one-line reminder to run `/orient:decide`.
+  Non-blocking by default (`ORIENT_BLOCK=1` makes it block; `--no-verify` always skips).
+  Git-native, so it works the same across every agent. Install is manual and documented —
+  nothing auto-wires it.
+- `commit`'s decision check is now a plain, list-based reminder, not a "structural change"
+  guess: it keys off a fixed manifest list, has the model judge whether a real dependency
+  or datastore changed (so version bumps don't trigger it), and never blocks. It no longer
+  claims to detect a "matching ADR" — that isn't computable from a diff.
+- Removed the `decide` decision-sweep idea from the 0.1.3 line of work: pairing an ADR to
+  the change it documents isn't computable from git, and a check inside `decide` can't catch
+  a decision you forgot to record. Capture stays on the commit and hook paths. (ADR-0014)
+
 ## 0.1.3
 
 - `decide` now also fires on plan approval: when a plan is approved before a build, the

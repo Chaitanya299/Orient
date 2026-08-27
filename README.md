@@ -151,6 +151,9 @@ Never without asking. The survey and trace agents are read-only; the writing com
 **What if I don't keep the docs current?**
 Then they're just context, not enforcement — orient makes the right thing cheap, but a convention that *must* hold belongs in a test or a hook, not a doc. `sync` exists to make staying current a one-command habit.
 
+**Can something remind me at commit time?**
+Yes, opt-in. orient ships a git `pre-commit` hook (`plugins/orient/scripts/pre-commit.sh`) that nudges when a dependency or build manifest (`package.json`, `go.mod`, `Cargo.toml`, `Dockerfile`, …) is staged with no ADR — a plain reminder, not a decision detector, and it never blocks the commit. It's the one deterministic piece: git runs it, so it fires no matter which agent (or none) you commit from. To use it, copy that script into a tracked repo's `.git/hooks/pre-commit` and `chmod +x` it. `ORIENT_BLOCK=1` makes it block instead of nudge; `git commit --no-verify` always skips it.
+
 ## License
 
 MIT, by [Chaitanya299](https://github.com/Chaitanya299). See [LICENSE](./plugins/orient/LICENSE).

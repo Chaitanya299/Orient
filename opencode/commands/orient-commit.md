@@ -11,9 +11,12 @@ rotate, and stop.
 
 If nothing is staged, list the changed files and ask which to stage. Never `git add -A`.
 
-If the staged diff shows a structural change (new module/service, swapped dependency or
-datastore, changed boundary) with no matching ADR in `docs/decisions/`, say so and offer
-`/orient-decide` first — a backstop for a decision the proactive offer missed.
+From `git diff --staged --name-only`: if a dependency/build manifest is staged
+(`package.json`, `go.mod`, `Cargo.toml`, `requirements.txt`, `pyproject.toml`, `Gemfile`,
+`pom.xml`, `build.gradle`, `composer.json`, `Dockerfile`, `docker-compose.yml`; not
+lockfiles) and no ADR is staged here, check the diff — if it added or swapped a dependency
+or datastore (not a version bump), offer `/orient-decide` first. Routine bump → continue.
+Non-blocking, a reminder not a guarantee.
 
 Draft this shape, then show it and stop — commit only on approval via a
 `git commit -F -` heredoc. Never `--amend`, `push`, or `--no-verify`.
