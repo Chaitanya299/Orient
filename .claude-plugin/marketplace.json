@@ -1,6 +1,6 @@
 {
   "name": "chaitanya299-plugins",
-  "owner": { "name": "Parasana Chaitanya", "url": "https://github.com/Chaitanya299" },
+  "owner": { "name": "Parasana Sai Chaitanya", "url": "https://github.com/Chaitanya299" },
   "description": "Plugins for keeping long-running Claude Code projects oriented.",
   "plugins": [
     {

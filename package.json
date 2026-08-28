@@ -7,6 +7,9 @@
     "orient": "bin/orient.mjs"
   },
   "scripts": {
+    "test": "node --test --test-concurrency=1 tests/contracts.test.mjs tests/installer.test.mjs tests/hooks.test.mjs",
+    "test:mutation": "node --test --test-concurrency=1 tests/mutation.test.mjs",
+    "validate": "claude plugin validate . --strict && claude plugin validate ./plugins/orient --strict",
     "postinstall": "node scripts/postinstall.mjs",
     "check-version": "node scripts/check-version.mjs",
     "prepublishOnly": "node scripts/check-version.mjs"
@@ -42,6 +45,6 @@
   "bugs": {
     "url": "https://github.com/Chaitanya299/Orient/issues"
   },
-  "author": "Parasana Chaitanya (https://github.com/Chaitanya299)",
-  "license": "MIT"
+  "author": "Parasana Sai Chaitanya (https://github.com/Chaitanya299)",
+  "license": "Apache-2.0"
 }

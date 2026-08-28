@@ -22,3 +22,10 @@ Skills: `/orient:init`, `/orient:status`, `/orient:sync`, `/orient:decide`,
 Docs are context, not enforcement. orient makes the right thing cheap and easy, but it
 can't *make* anyone keep `STATE.md` current. Anything that must hold — an invariant, a
 convention — belongs in a test, a lint rule, or a hook, not a doc.
+
+## License & Trademark
+
+See the root [`LICENSE`](../../LICENSE) (Apache 2.0), [`CONTRIBUTING.md`](../../CONTRIBUTING.md),
+and [`TRADEMARK.md`](../../TRADEMARK.md) for full details.
+
+© 2026 Parasana Sai Chaitanya

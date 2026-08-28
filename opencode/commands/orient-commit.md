@@ -5,8 +5,8 @@ description: Draft a git commit message (what / why / findings) for review befor
 Draft a commit message and commit only after explicit approval.
 
 **Secret gate first.** From `git diff --staged`, refuse if a staged file is a `.env`
-(non-`.example`) or the diff contains a key literal (`AKIA…`, `ghp_…`, `sk-…`,
-`BEGIN … PRIVATE KEY`). Name it, tell the user to unstage (`git restore --staged`) and
+(non-`.example`) or the diff contains a key literal (`AKIA[0-9A-Z]{16}`, `ghp_[A-Za-z0-9]{36}`,
+`sk-[A-Za-z0-9]{20,}`, `-----BEGIN [A-Z ]*PRIVATE KEY-----`). Name it, tell the user to unstage (`git restore --staged`) and
 rotate, and stop.
 
 If nothing is staged, list the changed files and ask which to stage. Never `git add -A`.

@@ -1,0 +1,41 @@
+name: publish
+
+# Publish to npm with build provenance when a version tag (v*) is pushed.
+# Provenance is a signed attestation linking the published tarball to THIS repo
+# and THIS workflow run, so anyone installing can verify it was built from source
+# and not tampered with.
+#
+# Uses npm "trusted publishing" (OIDC) — there is NO NPM_TOKEN secret to leak,
+# rotate, or exfiltrate. GitHub mints a short-lived identity token per run.
+#
+# ONE-TIME SETUP (only you can do this, and until it's done the publish step is
+# rejected by the registry — it fails safe, it never publishes wrongly):
+#   npmjs.com -> @chaitanya299/orient -> Settings -> Trusted Publishing ->
+#   add this repository (Chaitanya299/Orient) and workflow file `publish.yml`.
+#   Docs: https://docs.npmjs.com/trusted-publishers
+#
+# To cut a release once configured:  git tag v0.1.6 && git push origin v0.1.6
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write   # required for OIDC trusted publishing + provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout@v4.2.2 — pinned to a full commit SHA (tags are mutable).
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      # actions/setup-node@v4.1.0 — pinned to a full commit SHA.
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      # Trusted publishing needs a recent npm; the runner's bundled one may predate it.
+      - run: npm install -g npm@latest
+      # prepublishOnly runs the ADR-0011 version-sync gate; no token needed (OIDC).
+      - run: npm publish --provenance --access public

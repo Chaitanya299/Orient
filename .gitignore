@@ -16,6 +16,19 @@
 # Internal publishing notes — kept local, not shipped in the public repo
 PUBLISHING.md
 
+# Deterministic test suite — kept local (runnable with `npm test`), not committed
+# or shipped. The `repo-test` agent covers end-to-end verification on demand.
+tests/
+
+# Local install artifacts and strays — never commit. `.opencode/` and `.agents/`
+# are what orient *installs into* a consumer repo; the source lives in `opencode/`
+# and `codex/`. `.claude/` is local agent/settings config. `*.vsix` catches stray
+# editor-extension bundles. These block a careless `git add .` from committing junk.
+*.vsix
+.claude/
+.opencode/
+.agents/
+
 # npm
 node_modules/
 *.tgz

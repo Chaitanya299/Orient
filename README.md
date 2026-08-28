@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
+  <img src="https://img.shields.io/badge/license-Apache_2.0-blue.svg" alt="License: Apache 2.0" />
   <img src="https://img.shields.io/badge/Claude_Code-plugin-D97757.svg" alt="Claude Code plugin" />
   <img src="https://img.shields.io/badge/opencode-commands-000000.svg" alt="opencode commands" />
   <img src="https://img.shields.io/badge/Codex-skills-10A37F.svg" alt="Codex skills" />
@@ -156,6 +156,8 @@ Yes, opt-in. orient ships a git `pre-commit` hook (`plugins/orient/scripts/pre-c
 
 ## License
 
-MIT, by [Chaitanya299](https://github.com/Chaitanya299). See [LICENSE](./plugins/orient/LICENSE).
+Orient is licensed under the Apache License 2.0 — see [LICENSE](LICENSE).
 
-*by ~ Chaitanya♥️*
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and [TRADEMARK.md](TRADEMARK.md) for trademark usage policy.
+
+© 2026 Parasana Sai Chaitanya

@@ -7,7 +7,10 @@
 # bump nudges the same as adding a datastore. Accept it (non-blocking, opt-in); add
 # content-classification only if the noise actually bothers you.
 
-# Where ADRs live (mirrors the plugin's docs_dir option); reject unsafe values.
+# Where ADRs live. This MIRRORS the plugin's docs_dir option rather than reading it:
+# git runs this hook from .git/hooks/, where Claude Code's CLAUDE_PLUGIN_OPTION_*
+# env is never set. Pointing this at CLAUDE_PLUGIN_OPTION_DOCS_DIR would read an
+# always-empty value and silently fall back to "docs". Keep the ORIENT_ prefix.
 dd=${ORIENT_DOCS_DIR:-docs}
 [ -z "$dd" ] && dd=docs
 case "$dd" in /*|*..*) dd=docs ;; esac
@@ -16,7 +19,8 @@ staged=$(git diff --cached --name-only 2>/dev/null) || exit 0
 [ -z "$staged" ] && exit 0
 
 # An ADR staged in this very commit means the decision is already being recorded.
-if printf '%s\n' "$staged" | grep -q "^$dd/decisions/"; then
+# -F: $dd is data, not a pattern. Unquoted it would make "docs.v2" match "docsXv2".
+if printf '%s\n' "$staged" | grep -qF -- "$dd/decisions/"; then
   exit 0
 fi
 

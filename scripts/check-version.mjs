@@ -9,7 +9,9 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = dirname(dirname(fileURLToPath(import.meta.url)));
+// ORIENT_ROOT is a test seam: the drift branch is otherwise unreachable, since
+// this resolves from its own file location rather than cwd.
+const root = process.env.ORIENT_ROOT ?? dirname(dirname(fileURLToPath(import.meta.url)));
 const read = (p) => JSON.parse(readFileSync(join(root, p), "utf8")).version;
 
 const plugin = read("plugins/orient/.claude-plugin/plugin.json");

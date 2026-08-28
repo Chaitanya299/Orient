@@ -1,9 +1,11 @@
-# STATE — <!-- updated: 2026-08-25 -->
+# STATE — <!-- updated: 2026-08-28 -->
 
 ## Current focus
-0.1.4 in progress. The plugin is built, secured, ported to opencode and Codex, published
-to npm, and installable from the marketplace. Decision-capture was reframed after a full
-review: an honest list-based commit reminder plus an opt-in pre-commit hook (ADR-0014).
+0.1.6 in the works (0.1.5 is the live version). Three installer/hook fixes, a relicense to
+Apache 2.0, launch security hardening (locked-down `.gitignore`, signed-provenance publish
+workflow), and governance docs (CONTRIBUTING, TRADEMARK). A 60-case deterministic suite plus
+a mutation check run **locally** before a release — kept in a gitignored `tests/`, not CI;
+skill *behaviour* stays with the on-demand `repo-test` agent (ADR-0015). Bump + publish pending.
 
 ## Shape
 ```mermaid
@@ -29,15 +31,21 @@ flowchart TD
   enforced on publish + CI.
 - `decide` is proactive and keeps architecture.md + a STATE Shape diagram in sync.
 - Published to github.com/Chaitanya299/Orient; installed from the marketplace, dogfooding.
-- Decisions recorded: ADR-0001 through ADR-0014.
+- Decisions recorded: ADR-0001 through ADR-0015.
+- Test suite (ADR-0015): 60 deterministic cases + 10 automated mutants, run locally
+  before releases (gitignored, not in CI). Found and fixed on the way in: the installer
+  clobbered user-edited command files (later upgraded to a hash-manifest model — untouched
+  files auto-update, edited files are preserved as `.new`); the opencode commit port's
+  secret patterns had lost their length bounds; `pre-commit.sh` interpolated the docs dir
+  into a regex unquoted.
 
 ## In progress
-- 0.1.4: list-based commit reminder + opt-in pre-commit hook; cut the `decide`-sweep idea.
-  Code done and tested; publish pending.
+- 0.1.6: test suite + three fixes it surfaced. Code done, suite green, validate passes;
+  version bump and publish pending.
 
 ## Next up
-- Publish 0.1.4 to npm and `claude plugin update` to pull it.
-- Tag `v0.1.0` (or current) on GitHub.
+- Bump to 0.1.6 (plugin.json first — ADR-0011), publish to npm, `claude plugin update`.
+- Tag `v0.1.6` on GitHub (triggers the provenance publish workflow once trusted publishing is set up).
 - Submit to the official directories (Claude Code: clau.de/plugin-directory-submission;
   Codex: package skills + OpenAI portal — see local PUBLISHING.md).
 
@@ -46,7 +54,8 @@ flowchart TD
   (a step inside `decide` can't catch a forgotten decision, and ADR-to-change pairing isn't
   computable from git) and reframed to a plain commit reminder + an opt-in hook. The real
   miss rate is still unmeasured — needs a week of use to confirm.
-- Does `scripts/orient.sh` work under Git Bash and WSL on Windows? Untested.
+- Does `scripts/orient.sh` work under Git Bash and WSL on Windows? Untested — the suite
+  runs on Linux and macOS only, so this gap is now explicit rather than assumed.
 
 ## Known issues
 - Shape diagram lives in a volatile file (`sync` rewrites STATE.md); mitigated by the 6-node
