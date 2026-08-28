@@ -1,6 +1,6 @@
 {
   "name": "@chaitanya299/orient",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Never lose the thread of what you're building — an orientation layer for Claude Code, opencode, and Codex.",
   "type": "module",
   "bin": {

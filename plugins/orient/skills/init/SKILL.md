@@ -18,6 +18,11 @@ Read `CLAUDE_PLUGIN_OPTION_DOCS_DIR` from the environment. If unset or empty, us
 `docs`. Call this `$DOCS_DIR` for the rest of the run. Every path below is relative
 to the repo root.
 
+The one artifact every future session depends on is the CLAUDE.md pointer block
+(step 6) — it carries the triggers that make decision-capture work. If there's any
+chance you won't finish every step, write that block first; the rest of this flow only
+refines the docs it points to.
+
 ## 2. Detect an existing setup (repair mode)
 If `$DOCS_DIR/STATE.md` or `$DOCS_DIR/decisions/` already exists, switch to repair
 mode: report what exists, propose only additions, and never overwrite an existing

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.7
+
+- The installer now writes the `AGENTS.md` pointer block for you. `npx @chaitanya299/orient
+  opencode|codex` injects the block (the one that makes the agent offer to record decisions)
+  straight into your project's `AGENTS.md`, so decision-capture works from the moment you
+  install — it no longer depends on the model completing every step of `init`. Re-running is
+  idempotent (it refreshes the block between the markers), existing `AGENTS.md` content is
+  preserved, and a file with mismatched markers or CRLF endings is left untouched. `--global`
+  installs still point you to run `init` per repo.
+- `init` now writes the pointer block early as a backstop, so even a run that stops short still
+  lands the one artifact every future session depends on.
+- No more "2 userConfig options not yet set" notice on install. The two options (`docs_dir`,
+  `auto_orient`) only ever shadowed working code defaults, so they're gone; a fresh install is
+  silent and behaves exactly as before (`docs`, session-start orientation on). See ADR-0017.
+
 ## 0.1.6
 
 - Installer no longer clobbers your edits. `npx @chaitanya299/orient opencode|codex` now

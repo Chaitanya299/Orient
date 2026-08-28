@@ -15,6 +15,12 @@ Work through these steps in order.
 Use `docs` unless the user named a different directory. Call it `$DOCS_DIR`. Every
 path below is relative to the repo root.
 
+The one artifact every future session depends on is the AGENTS.md pointer block
+(step 6) — it carries the triggers that make decision-capture work. If there's any
+chance you won't finish every step, write that block first; the rest of this flow only
+refines the docs it points to. (The npm installer usually wrote it already; step 6 then
+just refreshes it in place.)
+
 ## 2. Detect an existing setup (repair mode)
 If `$DOCS_DIR/STATE.md` or `$DOCS_DIR/decisions/` already exists, switch to repair
 mode: report what exists, propose only additions, and never overwrite an existing

@@ -74,7 +74,7 @@ It surveys your repo in a read-only subagent, shows you everything it plans to w
 npx @chaitanya299/orient opencode
 ```
 
-This copies six commands and two agents into `.opencode/` in your project. Restart opencode, then run `/orient-init`.
+This copies six commands and two agents into `.opencode/`, and writes orient's pointer block into your project's `AGENTS.md` (the block that makes the agent offer to record decisions), so decision-capture works from the first session. Restart opencode, then run `/orient-init` to scaffold the docs. Re-running the installer just refreshes the block in place, and it never touches anything else in your `AGENTS.md`.
 
 For global install (available in every project):
 
@@ -88,7 +88,7 @@ npx @chaitanya299/orient opencode --global
 npx @chaitanya299/orient codex
 ```
 
-This copies six skills into `.agents/skills/` in your project. Restart Codex, then run `$orient-init`.
+This copies six skills into `.agents/skills/`, and writes orient's pointer block into your project's `AGENTS.md` (the block that makes the agent offer to record decisions), so decision-capture works from the first session. Restart Codex, then run `$orient-init` to scaffold the docs. Re-running the installer just refreshes the block in place, and it never touches anything else in your `AGENTS.md`.
 
 For global install (available in every project):
 

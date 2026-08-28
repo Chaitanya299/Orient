@@ -89,6 +89,51 @@ function report({ installed, updated, current, preserved }) {
   }
 }
 
+// The AGENTS.md pointer block is what makes decision-capture work every session
+// (it carries the "offer an ADR" triggers). It used to be written only by the
+// model-driven `init` step 6 — which can be skipped or paraphrased, leaving a repo
+// with no triggers at all. We write it here deterministically instead. Source of
+// truth is the block the init command already documents, so there's nothing to keep
+// in sync: we read it straight out of the shipped init file and substitute the docs
+// dir. ponytail: default docs dir; a custom one is picked up when the user runs init.
+function agentsBlock(srcRel, docsDir) {
+  const txt = readFileSync(join(pkg, srcRel), "utf8");
+  const head = txt.indexOf("### AGENTS.md block");
+  const fence = txt.indexOf("```markdown", head);
+  const bodyStart = txt.indexOf("\n", fence) + 1;
+  const fenceClose = txt.indexOf("```", bodyStart);
+  const block = txt.slice(bodyStart, fenceClose).trimEnd().replaceAll("$DOCS_DIR", docsDir);
+  // Fail loud if the init file's shape ever drifts from what we parse for.
+  if (head < 0 || fence < 0 || fenceClose < 0 ||
+      !block.includes("<!-- ORIENT:START -->") || !block.includes("plan is approved")) {
+    throw new Error(`orient: could not extract the AGENTS.md block from ${srcRel}`);
+  }
+  return block;
+}
+
+// Inject the block into <projectRoot>/AGENTS.md using init's marker rules:
+// replace between the markers if both are present, append if neither is, create the
+// file if absent. Refuse to touch a file with CRLF or a lone/duplicated marker rather
+// than corrupt it — that case is rare and init (or the user) can sort it out.
+const START = "<!-- ORIENT:START -->", END = "<!-- ORIENT:END -->";
+function injectAgentsBlock(projectRoot, block) {
+  const file = join(projectRoot, "AGENTS.md");
+  if (!existsSync(file)) { writeFileSync(file, block + "\n"); return "created AGENTS.md with the orient block"; }
+  const txt = readFileSync(file, "utf8");
+  if (txt.includes("\r\n")) return "left AGENTS.md untouched (CRLF line endings — run /orient-init to add the block)";
+  const starts = txt.split(START).length - 1, ends = txt.split(END).length - 1;
+  if (starts > 1 || ends > 1) return "left AGENTS.md untouched (duplicated orient markers — fix them, then re-run)";
+  if (starts === 1 && ends === 1) {
+    const s = txt.indexOf(START), e = txt.indexOf(END);
+    if (e < s) return "left AGENTS.md untouched (orient markers out of order — run /orient-init)";
+    writeFileSync(file, txt.slice(0, s) + block + txt.slice(e + END.length));
+    return "refreshed the orient block in AGENTS.md";
+  }
+  if (starts !== ends) return "left AGENTS.md untouched (only one orient marker present — run /orient-init)";
+  writeFileSync(file, txt.trimEnd() + "\n\n" + block + "\n");
+  return "appended the orient block to AGENTS.md";
+}
+
 function usage() {
   console.log(`orient — never lose the thread of what you're building
 
@@ -112,6 +157,11 @@ switch (target) {
     const root = global ? join(homedir(), ".config", "opencode") : join(process.cwd(), ".opencode");
     console.log(`Installing orient for opencode${global ? " (global)" : ""}:`);
     report(install(root, [["opencode/commands", "commands"], ["opencode/agents", "agents"]]));
+    if (global) {
+      console.log("  (global install — run /orient-init in each repo to add the AGENTS.md block.)");
+    } else {
+      console.log(`  ${injectAgentsBlock(process.cwd(), agentsBlock("opencode/commands/orient-init.md", "docs"))}`);
+    }
     console.log("Done. Restart opencode, then run /orient-init in a repo.");
     break;
   }
@@ -119,6 +169,11 @@ switch (target) {
     const root = global ? join(homedir(), ".agents", "skills") : join(process.cwd(), ".agents", "skills");
     console.log(`Installing orient for Codex${global ? " (global)" : ""}:`);
     report(install(root, [["codex/skills", "."]]));
+    if (global) {
+      console.log("  (global install — run $orient-init in each repo to add the AGENTS.md block.)");
+    } else {
+      console.log(`  ${injectAgentsBlock(process.cwd(), agentsBlock("codex/skills/orient-init/SKILL.md", "docs"))}`);
+    }
     console.log("Done. Restart Codex, then run $orient-init in a repo.");
     break;
   }
