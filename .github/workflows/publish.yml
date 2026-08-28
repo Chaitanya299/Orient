@@ -37,5 +37,19 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       # Trusted publishing needs a recent npm; the runner's bundled one may predate it.
       - run: npm install -g npm@latest
+      # Skip cleanly if this version is already on npm (e.g. you published manually before
+      # tagging). Keeps the run green instead of failing on a duplicate. Only a genuinely
+      # new version reaches the publish step, so a real publish failure still shows red.
+      - id: check
+        run: |
+          name=$(node -pe "require('./package.json').name")
+          ver=$(node -pe "require('./package.json').version")
+          if [ -n "$(npm view "$name@$ver" version 2>/dev/null)" ]; then
+            echo "$name@$ver is already on npm — skipping publish."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
       # prepublishOnly runs the ADR-0011 version-sync gate; no token needed (OIDC).
-      - run: npm publish --provenance --access public
+      - if: steps.check.outputs.publish == 'true'
+        run: npm publish --provenance --access public

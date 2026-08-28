@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/Codex-skills-10A37F.svg" alt="Codex skills" />
   <img src="https://img.shields.io/badge/network-none-brightgreen.svg" alt="No network" />
   <img src="https://img.shields.io/badge/telemetry-zero-brightgreen.svg" alt="Zero telemetry" />
+  <img src="https://img.shields.io/npm/dt/@chaitanya299/orient.svg" alt="Downloads" />
 </p>
 
 <p align="center">
@@ -45,14 +46,14 @@ docs/
 
 ## Quickstart (Claude Code)
 
-**Inside Claude Code** — paste these at the `/` prompt:
+Inside Claude Code:
 
 ```
 /plugin marketplace add Chaitanya299/Orient
 /plugin install orient@chaitanya299-plugins
 ```
 
-**From your terminal** — run once:
+From terminal:
 
 ```bash
 claude plugin marketplace add Chaitanya299/Orient
@@ -65,26 +66,35 @@ Then, in a repo you want to track:
 /orient:init
 ```
 
-It surveys your repo in a read-only subagent, shows you **everything** it plans to write, and writes nothing until you approve. From then on, you and your agent work from one clear picture of what you're building.
+It surveys your repo in a read-only subagent, shows you everything it plans to write, and writes nothing until you approve. From then on, you and your agent work from one clear picture of what you're building.
 
-## One idea, three agents
+## Install for opencode
 
-orient ships for all three major coding agents. Same behavior, native to each.
+```bash
+npx @chaitanya299/orient opencode
+```
 
-| Agent | How it ships | Install |
-|---|---|---|
-| **Claude Code** | Marketplace plugin | Two commands above |
-| **opencode** | `.opencode` commands + agents | `npx @chaitanya299/orient opencode` |
-| **Codex** | Native skills (`.agents/skills`) | `npx @chaitanya299/orient codex` |
+This copies six commands and two agents into `.opencode/` in your project. Restart opencode, then run `/orient-init`.
 
-The `npx` installer has zero dependencies — it just copies the files into place (add
-`--global` to install for every project). Prefer to copy them yourself? The manual
-steps are in each port's README: [opencode](./opencode/README.md), [Codex](./codex/README.md).
+For global install (available in every project):
 
-> **Claude Code is different — use the marketplace, not npm.** Claude Code loads plugins
-> only through its marketplace (the two commands under Quickstart), never from `npm`. So
-> `npm i @chaitanya299/orient` sets up the opencode and Codex ports; for Claude Code, run
-> `claude plugin marketplace add Chaitanya299/Orient` then `claude plugin install orient@chaitanya299-plugins`.
+```bash
+npx @chaitanya299/orient opencode --global
+```
+
+## Install for Codex
+
+```bash
+npx @chaitanya299/orient codex
+```
+
+This copies six skills into `.agents/skills/` in your project. Restart Codex, then run `$orient-init`.
+
+For global install (available in every project):
+
+```bash
+npx @chaitanya299/orient codex --global
+```
 
 ## The workflow — the six commands, in the order you use them
 
