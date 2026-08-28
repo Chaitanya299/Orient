@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.6
+
+- Installer no longer clobbers your edits. `npx @chaitanya299/orient opencode|codex` now
+  records what it shipped (a hash manifest), so files you never touched update on their own,
+  while a file you edited is kept and the new version is saved beside it as `<file>.new`.
+  No more "delete everything and reinstall" to take an update.
+- opencode's commit secret-gate patterns were restored to their bounded form, matching the
+  Claude Code and Codex ports.
+- `pre-commit.sh` treats the docs directory as literal text, not a regex.
+- Relicensed to Apache-2.0 (from MIT); added `CONTRIBUTING.md` and a trademark policy.
+  Releases can now publish with signed provenance.
+
 ## 0.1.5
 
 - The pre-commit hook's reminder is now a bold, boxed banner (coloured when the terminal

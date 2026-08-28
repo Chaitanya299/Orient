@@ -1,11 +1,12 @@
 # STATE — <!-- updated: 2026-08-28 -->
 
 ## Current focus
-0.1.6 in the works (0.1.5 is the live version). Three installer/hook fixes, a relicense to
-Apache 2.0, launch security hardening (locked-down `.gitignore`, signed-provenance publish
-workflow), and governance docs (CONTRIBUTING, TRADEMARK). A 60-case deterministic suite plus
-a mutation check run **locally** before a release — kept in a gitignored `tests/`, not CI;
-skill *behaviour* stays with the on-demand `repo-test` agent (ADR-0015). Bump + publish pending.
+0.1.6 bumped, committed, and pushed to GitHub (0.1.5 is the last version live on npm until
+publish). Three installer/hook fixes, a relicense to Apache 2.0, launch security hardening
+(locked-down `.gitignore`, signed-provenance publish workflow), and governance docs
+(CONTRIBUTING, TRADEMARK). A 60-case deterministic suite plus a mutation check run **locally**
+before a release — kept in a gitignored `tests/`, not CI; skill *behaviour* stays with the
+on-demand `repo-test` agent (ADR-0015). npm publish + `v0.1.6` tag pending.
 
 ## Shape
 ```mermaid
@@ -40,8 +41,8 @@ flowchart TD
   into a regex unquoted.
 
 ## In progress
-- 0.1.6: test suite + three fixes it surfaced. Code done, suite green, validate passes;
-  version bump and publish pending.
+- 0.1.6: bumped, committed, pushed. Suite green, validate passes; the `npm publish` and the
+  `v0.1.6` tag are the only remaining steps (maintainer runs them).
 
 ## Next up
 - Bump to 0.1.6 (plugin.json first — ADR-0011), publish to npm, `claude plugin update`.
