@@ -33,7 +33,7 @@ jobs:
       # actions/setup-node@v4.1.0 — pinned to a full commit SHA.
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
         with:
-          node-version: '20'
+          node-version: '22'   # active LTS; npm@latest requires Node 22.22.2+ (Node 20 is EOL)
           registry-url: 'https://registry.npmjs.org'
       # Trusted publishing needs a recent npm; the runner's bundled one may predate it.
       - run: npm install -g npm@latest
