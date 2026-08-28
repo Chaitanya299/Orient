@@ -113,6 +113,12 @@ where you left off) and `decide` (so the reasoning never scrolls away) — and o
 
 *(Claude Code uses `/orient:status`, opencode `/orient-status`, Codex `$orient-status` — same six everywhere.)*
 
+> **Read what it drafts before you approve.** The `commit` messages and `decide` ADRs are
+> AI-drafted from your diff and the conversation — strong starting points, not gospel. They
+> can miss a subtle reason, overstate a finding, or record the wrong *why*. orient never
+> writes without your yes, so treat that yes as a real review: check the message and the ADR
+> against what actually changed, and fix anything wrong or missing before you approve.
+
 ## See it in action
 
 orient runs on itself. Browse [`docs/`](./docs) in this repo to see exactly what it
@@ -157,6 +163,9 @@ No. It adds ~14 lines of pointers between markers, and never touches anything ou
 
 **Does it change my code?**
 Never without asking. The survey and trace agents are read-only; the writing commands draft first and wait for your yes.
+
+**Should I trust the commit messages and ADRs it writes?**
+Read them first. They're AI-drafted from the diff and the conversation — solid drafts, but they can miss a reason, overstate a finding, or capture the wrong *why*. orient shows every draft and waits for your approval; use that moment to actually review it and fill in anything missing, not to rubber-stamp.
 
 **What if I don't keep the docs current?**
 Then they're just context, not enforcement — orient makes the right thing cheap, but a convention that *must* hold belongs in a test or a hook, not a doc. `sync` exists to make staying current a one-command habit.
