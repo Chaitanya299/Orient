@@ -14,37 +14,84 @@
   <img src="https://img.shields.io/npm/dt/@chaitanya299/orient.svg" alt="Downloads" />
 </p>
 
-<p align="center">
-  <b>A living map of what you're building: where it stands, the decisions you made, and the <i>why</i> behind them.</b><br/>
-  Kept cheap enough that it never gets in your way, or your agent's.
-</p>
+orient keeps a short record of your project inside the repo: where it stands, what you decided, and why. Your coding agent writes it while you work. Nothing is saved until you say yes.
 
----
+Works with Claude Code, opencode and Codex. Runs on your machine. Makes no network calls. Free and open source.
 
-You've been building projects with AI for months. It proposes, you approve, and the project keeps moving. Fast.
+## The problem
 
-Then you try to remember why you chose this database over another, or whether that feature ever actually got finished, and you can't. Nothing was keeping track. Each decision lived in a conversation that scrolled away, and the reasoning went with it.
+You've been building with an agent for a few months. Then someone asks why you picked this database, or whether that feature ever shipped, and you don't know. The answer was in a chat that scrolled away.
 
-orient is the fix. As you build, it keeps a small, honest record alongside your code: what's done, what's still half wired, what you're building next, and the reasoning behind the choices that got you here. So at any point you can open it and see exactly where your project stands and why, instead of reconstructing it from memory.
+Commit messages say what changed, rarely why. And stuffing everything into `CLAUDE.md` doesn't help: that file loads into every session, so the longer it gets, the more tokens it burns and the less well each rule gets followed.
 
-## What it actually does
+## How it works
 
-orient gives your project three things it was missing:
+```mermaid
+flowchart LR
+  init["init<br/>once per repo"] --> status["status<br/>where did I leave off?"]
+  status --> build["build with<br/>your agent"]
+  build --> sync["sync<br/>update STATE.md"]
+  sync -. "next session" .-> status
+  build -- "a real decision" --> decide["decide<br/>record the why"]
+  decide --> build
+```
 
-- **A `STATE.md` that always answers "where am I?"** Current focus, what's done, what's blocked. One glance instead of an archaeology dig through commits.
-- **A decision log that keeps the *why*.** Every real architectural call becomes a short, append-only record (an ADR), so "why did we drop SQLite?" has an answer six months later instead of a shrug. orient offers to log a decision the moment you make one, so you don't have to remember, and it updates your architecture notes to match. `init` even mines your git history and drafts candidate ADRs from the commits that look like real turning points, so you don't start from a blank page. You approve each one.
-- **Answers on demand, never stale docs.** Trace a request through the code, or check where things stand, in a single command, instead of maintaining diagrams that rot the moment the code changes.
+1. **Run `init` once.** It reads your repo in a read-only subagent, drafts the docs, and turns commits that look like turning points into draft decisions. You keep the ones you want.
+2. **Build as usual.** When you make a real decision, the agent offers to write it down (see below).
+3. **Run `sync` at the end of a session.** `STATE.md` catches up with what you actually did.
+4. **Run `status` next time.** It reads one file and tells you where you left off. In Claude Code, the current focus also prints on its own when a session starts.
 
-All of it lives in files that cost nothing until something reads them, with only ~14 lines of pointers in your instructions file. Nothing preloaded, nothing crowding the work.
+Here's what happens when you make a call mid-session:
+
+```mermaid
+sequenceDiagram
+  actor You
+  participant Agent
+  participant Docs as docs/
+  You->>Agent: "Let's use Postgres instead of SQLite"
+  Agent->>You: Want me to record this decision?
+  You->>Agent: Yes
+  Agent->>You: Draft: what, why, alternatives, trade-offs
+  You->>Agent: Looks right
+  Agent->>Docs: decisions/0004-use-postgres.md
+  Agent->>Docs: architecture.md, if the structure changed (asks first)
+```
+
+Every write is a draft first. If you say no, nothing changes.
+
+## What it adds to your repo
 
 ```
+CLAUDE.md or AGENTS.md   about 14 lines of pointers, between ORIENT markers
 docs/
-  STATE.md          # what's built, in progress, blocked  (read this first)
-  architecture.md   # entry points and module boundaries
-  decisions/        # one append-only ADR per real decision
+  STATE.md               done, in progress, blocked, next up (read this first)
+  architecture.md        entry points and module boundaries
+  decisions/             one file per decision, never edited, only superseded
 ```
 
-## Quickstart (Claude Code)
+```mermaid
+flowchart LR
+  subgraph always["Loaded every session"]
+    ptr["CLAUDE.md / AGENTS.md<br/>about 14 lines of pointers"]
+  end
+  subgraph ondemand["Read only when needed"]
+    state["STATE.md"]
+    arch["architecture.md"]
+    dec["decisions/"]
+  end
+  ptr -.-> state
+  ptr -.-> arch
+  ptr -.-> dec
+```
+
+Only the pointers cost you anything up front. Everything else sits on disk until the agent reads it. That's why it holds up on a repo that's years old.
+
+## Install
+
+Pick your agent. Setup takes a couple of commands and one `init` run (about 30 to 60 seconds on a large repo).
+
+<details open>
+<summary><b>Claude Code</b></summary>
 
 Inside Claude Code:
 
@@ -53,136 +100,105 @@ Inside Claude Code:
 /plugin install orient@chaitanya299-plugins
 ```
 
-From terminal:
+Or from a terminal:
 
 ```bash
 claude plugin marketplace add Chaitanya299/Orient
 claude plugin install orient@chaitanya299-plugins
 ```
 
-Then, in a repo you want to track:
+Then, in a repo you want to track, run `/orient:init`.
 
-```
-/orient:init
-```
+</details>
 
-It surveys your repo in a read-only subagent, shows you everything it plans to write, and writes nothing until you approve. From then on, you and your agent work from one clear picture of what you're building.
-
-## Install for opencode
+<details>
+<summary><b>opencode</b></summary>
 
 ```bash
 npx @chaitanya299/orient opencode
 ```
 
-This copies six commands and two agents into `.opencode/`, and writes orient's pointer block into your project's `AGENTS.md` (the block that makes the agent offer to record decisions), so decision-capture works from the first session. Restart opencode, then run `/orient-init` to scaffold the docs. Re-running the installer just refreshes the block in place, and it never touches anything else in your `AGENTS.md`.
+This adds six commands and two agents to `.opencode/`, and writes the pointer block into your `AGENTS.md`. Restart opencode, then run `/orient-init`.
 
-For global install (available in every project):
+To install for every project, add `--global`. Then run `/orient-init` in each repo you want to track, since the global install can't write a repo's `AGENTS.md` for you.
 
-```bash
-npx @chaitanya299/orient opencode --global
-```
+</details>
 
-## Install for Codex
+<details>
+<summary><b>Codex</b></summary>
 
 ```bash
 npx @chaitanya299/orient codex
 ```
 
-This copies six skills into `.agents/skills/`, and writes orient's pointer block into your project's `AGENTS.md` (the block that makes the agent offer to record decisions), so decision-capture works from the first session. Restart Codex, then run `$orient-init` to scaffold the docs. Re-running the installer just refreshes the block in place, and it never touches anything else in your `AGENTS.md`.
+This adds six skills to `.agents/skills/`, and writes the pointer block into your `AGENTS.md`. Restart Codex, then run `$orient-init`.
 
-For global install (available in every project):
+To install for every project, add `--global`. Then run `$orient-init` in each repo you want to track, since the global install can't write a repo's `AGENTS.md` for you.
 
-```bash
-npx @chaitanya299/orient codex --global
-```
+</details>
 
-## The workflow, the six commands in the order you use them
+The opencode and Codex installers only touch the text between the `ORIENT` markers in `AGENTS.md`. Running one again refreshes that block and leaves the rest alone.
+
+## The six commands
 
 | When | Command | What it does |
 |---|---|---|
-| Once per project | `init` | Scaffold the docs and seed ADRs from your git history. |
-| Start of a session | `status` | "Where am I?" Reads STATE.md alone. Nearly free. |
-| While building | `trace` | Understand how one path runs, on demand, with `file:line` refs. |
-| When you decide something | `decide` | Record the *why* as an ADR, and update architecture.md to match. |
-| Before you commit | `commit` | Draft a what / why / findings message for review. |
-| End of a session | `sync` | Update STATE.md to match what actually changed. |
+| Once per project | `init` | Sets up the docs and drafts decisions from your git history. |
+| Start of a session | `status` | Tells you where things stand. Reads `STATE.md` and nothing else. |
+| While building | `trace` | Walks one path through the code with `file:line` refs. Saves nothing. |
+| When you decide something | `decide` | Writes the decision and the why. Updates `architecture.md` to match. |
+| Before you commit | `commit` | Drafts a what / why / findings commit message for you to review. |
+| End of a session | `sync` | Updates `STATE.md` to match what changed. |
 
-You won't run all six every day. The two you'll lean on most are `status` (to pick up
-where you left off) and `decide` (so the reasoning never scrolls away), and orient offers
-`decide` on its own the moment you make a real decision, so you just say yes.
+Claude Code uses `/orient:status`, opencode `/orient-status`, Codex `$orient-status`. Same six everywhere.
 
-*(Claude Code uses `/orient:status`, opencode `/orient-status`, Codex `$orient-status`, the same six everywhere.)*
+Most days you'll only touch two: `status` to pick up where you left off, and `decide`, which the agent should offer the moment you make a call.
 
-> **Read what it drafts before you approve.** The `commit` messages and `decide` ADRs are
-> AI-drafted from your diff and the conversation. They're strong starting points, not gospel.
-> They can miss a subtle reason, overstate a finding, or record the wrong *why*. orient never
-> writes without your yes, so treat that yes as a real review. Check the message and the ADR
-> against what actually changed, and fix anything wrong or missing before you approve.
+## Check that it's working
 
-## See it in action
+- Start a new session and run `status`. You should see the current focus from `STATE.md`.
+- Make a choice out loud, like "let's use Postgres for this." The agent should offer to record it. If it doesn't, run `decide` yourself.
+- Want to see real output first? orient tracks itself. Read this repo's [`STATE.md`](./docs/STATE.md), [`architecture.md`](./docs/architecture.md) and [decision log](./docs/decisions).
 
-orient runs on itself. Browse [`docs/`](./docs) in this repo to see exactly what it
-produces on a real project: a live [`STATE.md`](./docs/STATE.md), an
-[`architecture.md`](./docs/architecture.md), and a full
-[decision log](./docs/decisions) you can read end to end. That folder is the example.
+## Before you trust it
+
+- Commit messages and decision files are drafted by the AI from your diff and your chat. They can miss a reason or record the wrong one, so read them before you say yes.
+- The agent is prompted to offer `decide`, not forced to. It can miss a decision. When one matters, run `decide` yourself.
+- Docs are context, not rules. If something must always hold, put it in a test or a hook.
+- Tested on macOS and Linux. Windows (Git Bash, WSL) hasn't been tested yet.
+
+## Security
+
+- No network and no telemetry. It can't send your code anywhere.
+- The survey and trace agents are read-only. They never open `.env` files or keys.
+- `commit` refuses to commit a `.env` file or a detected key.
+- Every write is shown to you first.
+
+Details in [SECURITY.md](./SECURITY.md).
 
 ## Updating
 
-When you update the plugin or the npm package, orient's files change, but the block it
-already wrote into your project's `CLAUDE.md` / `AGENTS.md` does **not**. To pick up new
-behavior (like a smarter `decide`), **re-run `init` in each tracked project**. It's safe:
-it only replaces the text between the `ORIENT` markers, and never touches your `STATE.md`
-or existing ADRs.
+Update, then re-run `init` in each tracked project. The block already in your `CLAUDE.md` / `AGENTS.md` doesn't change on its own. `init` only replaces the text between the markers and never touches `STATE.md` or your decisions.
 
-- **Claude Code:** `claude plugin update orient@chaitanya299-plugins`, restart, then re-run `/orient:init`.
+- **Claude Code:** `claude plugin update orient@chaitanya299-plugins`, restart, then `/orient:init`.
 - **opencode / Codex:** `npx @chaitanya299/orient@latest opencode` (or `codex`), then re-run init.
-
-## Why it stays cheap
-
-Your instructions file loads in full into every session, and long files measurably reduce how well a model follows any single instruction. So orient keeps its always-on footprint to a handful of short pointers. Everything substantial (state, decisions, architecture) lives in files that only load when read. That's the whole trick, and it's why orient holds up on a repo that's been alive for years.
-
-## Secure by design
-
-orient runs on your machine and reads your repos, so it's built to be safe with them:
-
-- **No network. No telemetry.** It cannot send your code anywhere.
-- **Read-only survey agents.** They analyze, never modify.
-- **Secret-blind.** The agents never open `.env`/keys and never copy a secret value into a committed doc.
-- **`commit` won't ship a secret.** It refuses to commit a `.env` or a detected key.
-- **Nothing writes silently.** Every write is a proposal you approve.
-
-Full details and the reusable `.env` standard: [SECURITY.md](./SECURITY.md).
 
 ## FAQ
 
-**Does it work on a huge, old repo?**
-
-That's the point. The bigger the repo, the more you save by not re-deriving its context every session.
-
 **Will it bloat my `CLAUDE.md` / `AGENTS.md`?**
 
-No. It adds about 14 lines of pointers between markers, and never touches anything outside them. Re-running `init` never duplicates the block.
+No. About 14 lines between markers. Re-running `init` replaces them instead of adding more.
 
 **Does it change my code?**
 
-Never without asking. The survey and trace agents are read-only. The writing commands draft first, then wait for your yes.
+Not without asking. The survey and trace agents are read-only, and every command that writes shows you a draft and waits for your yes.
 
-**Should I trust the commit messages and ADRs it writes?**
+**Can it remind me at commit time?**
 
-Read them first. They're AI-drafted from the diff and the conversation. They're solid drafts, but they can miss a reason, overstate a finding, or capture the wrong *why*. orient shows every draft and waits for your approval, so use that moment to review it and fill in anything missing, not to rubber-stamp.
-
-**What if I don't keep the docs current?**
-
-Then they're just context, not enforcement. orient makes the right thing cheap, but a convention that *must* hold belongs in a test or a hook, not a doc. `sync` exists to make staying current a one-command habit.
-
-**Can something remind me at commit time?**
-
-Yes, opt-in. orient ships a git `pre-commit` hook (`plugins/orient/scripts/pre-commit.sh`) that nudges when a dependency or build manifest (`package.json`, `go.mod`, `Cargo.toml`, `Dockerfile`, and so on) is staged with no ADR. It's a plain reminder, not a decision detector, and it never blocks the commit. This is the one deterministic piece, because git runs it, so it fires no matter which agent (or none) you commit from. To use it, copy that script into a tracked repo's `.git/hooks/pre-commit` and `chmod +x` it. `ORIENT_BLOCK=1` makes it block instead of nudge, and `git commit --no-verify` always skips it.
+Yes, if you opt in. Copy [`pre-commit.sh`](./plugins/orient/scripts/pre-commit.sh) to `.git/hooks/pre-commit` and `chmod +x` it. When a dependency or build file (`package.json`, `go.mod`, `Dockerfile` and so on) is staged with no decision file, it nudges you. Git runs it, so it works with any agent, or none. It only blocks if you set `ORIENT_BLOCK=1`, and `git commit --no-verify` skips it.
 
 ## License
 
-Orient is licensed under the Apache License 2.0. See [LICENSE](LICENSE).
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and [TRADEMARK.md](TRADEMARK.md) for trademark usage policy.
+Apache License 2.0. See [LICENSE](LICENSE), [CONTRIBUTING.md](CONTRIBUTING.md) and [TRADEMARK.md](TRADEMARK.md).
 
 © 2026 Parasana Sai Chaitanya
