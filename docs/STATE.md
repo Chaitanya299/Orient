@@ -26,6 +26,8 @@ flowchart TD
   manifest. Passes `validate --strict`.
 - opencode and Codex ports, each with secret-blind + anti-injection guardrails.
 - Security hardening: secret-blind agents, commit secret gate, gitleaks CI, SECURITY.md.
+- gitleaks CI now gets `GITHUB_TOKEN` + `pull-requests: read`, so it actually scans PRs
+  (it had been exiting early on pull_request events; first seen on PR #1).
 - npm/npx distribution (zero-dependency installer); published `@chaitanya299/orient`, live
   through 0.1.2.
 - Version-sync gate (ADR-0011): plugin.json is source of truth, package.json mirrors it,
