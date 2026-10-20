@@ -51,7 +51,7 @@ bottom. Fill `<...>` placeholders and date the `updated:` marker.
   from the survey (major components and how they connect, 6 nodes max, not a call graph).
 - `$DOCS_DIR/architecture.md` — entry points, module boundaries, the three or four
   critical paths. Not a call graph, not a file listing.
-- `$DOCS_DIR/decisions/0001-record-architecture-decisions.md` — the ADR that
+- `$DOCS_DIR/decisions/0001.md` — the ADR that
   establishes the practice.
 
 Never write a secret value into any doc. If the survey surfaced credentials, name the
@@ -162,7 +162,7 @@ The three or four flows that matter most, one line each:
 - <the thing a newcomer would get wrong because the framework would suggest otherwise>
 ```
 
-### ADR (decisions/NNNN-kebab-title.md)
+### ADR (decisions/NNNN.md)
 
 ```markdown
 # ADR-NNNN: <title>

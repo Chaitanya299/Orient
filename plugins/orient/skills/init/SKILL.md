@@ -41,7 +41,7 @@ From the survey, draft (do not write yet):
   connect, 6 nodes max. Not a call graph.
 - `$DOCS_DIR/architecture.md` — from `templates/architecture.md`: entry points, module
   boundaries, the three or four critical paths. Not a call graph, not a file listing.
-- `$DOCS_DIR/decisions/0001-record-architecture-decisions.md` — the ADR that establishes
+- `$DOCS_DIR/decisions/0001.md` — the ADR that establishes
   the practice, from `templates/adr.md`.
 
 Never write a secret value into any doc. If the survey surfaced credentials, name the

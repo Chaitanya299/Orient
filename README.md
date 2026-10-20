@@ -53,7 +53,7 @@ sequenceDiagram
   You->>Agent: Yes
   Agent->>You: Draft: what, why, alternatives, trade-offs
   You->>Agent: Looks right
-  Agent->>Docs: decisions/0004-use-postgres.md
+  Agent->>Docs: decisions/0004.md
   Agent->>Docs: architecture.md, if the structure changed (asks first)
 ```
 
@@ -66,8 +66,10 @@ CLAUDE.md or AGENTS.md   about 14 lines of pointers, between ORIENT markers
 docs/
   STATE.md               done, in progress, blocked, next up (read this first)
   architecture.md        entry points and module boundaries
-  decisions/             one file per decision, never edited, only superseded
+  decisions/             one file per decision (0001.md, 0002.md...), never edited, only superseded
 ```
+
+Each decision's title is its first line. To list them all: `grep -h '^# ADR' docs/decisions/*.md`.
 
 ```mermaid
 flowchart LR
@@ -192,6 +194,10 @@ No. About 14 lines between markers. Re-running `init` replaces them instead of a
 **Does it change my code?**
 
 Not without asking. The survey and trace agents are read-only, and every command that writes shows you a draft and waits for your yes.
+
+**What if two people on a team record decision 0018 at the same time?**
+
+Git stops it. Decisions are named by number alone (`0018.md`), so the second branch to merge gets an ordinary merge conflict and can't merge until it's fixed. Keep main's `0018.md`, save yours as the next free number, fix its heading, and commit. No CI or setup needed, as long as everyone on the team is on orient 0.1.8 or later. Older versions name files `0018-title.md`, which git can't catch.
 
 **Can it remind me at commit time?**
 

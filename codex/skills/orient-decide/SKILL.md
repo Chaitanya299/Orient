@@ -10,7 +10,9 @@ Record one architectural decision as a numbered, append-only ADR.
 The docs directory is `docs` unless the user named a different one.
 
 1. Find the highest existing ADR number in `<docs_dir>/decisions/` and add one.
-   Filenames are `NNNN-kebab-title.md`, numbered from 0001.
+   Filenames are the number alone, `NNNN.md`, numbered from 0001 (count older
+   `NNNN-title.md` files too). Never reuse a number. The number-only name is what makes
+   two branches that pick the same number hit a git merge conflict.
 2. Fill the ADR shape (Context / Decision / Why over alternatives / Trade-offs /
    Consequences). Interview the user **only** for what can't be inferred from the
    session — the alternatives considered and the trade-off accepted are the parts
@@ -20,6 +22,10 @@ The docs directory is `docs` unless the user named a different one.
 Supersede rule: if this decision supersedes an earlier ADR, set `Supersedes:` in the
 new file and update **only** the `Superseded by:` line of the old one. No other edit
 to a past ADR is permitted — decisions are append-only.
+
+Number clash: a merge conflict on `<docs_dir>/decisions/NNNN.md` means another branch
+took that number first. Keep the base branch's file, save this ADR as the next free
+number, update its `# ADR-NNNN:` heading and any reference to it, then commit.
 
 ## Keep architecture and the shape diagram in sync
 After the ADR is written, check whether this decision changes structure — entry points,
