@@ -1,12 +1,12 @@
-# STATE — <!-- updated: 2026-08-28 -->
+# STATE — <!-- updated: 2026-10-20 -->
 
 ## Current focus
-0.1.7: the npm installer now writes the `AGENTS.md` pointer block deterministically for
-project-local opencode/Codex installs (ADR-0016), so decision-capture no longer depends on the
-model completing every step of `init`. Found from a real opencode run where `init` ran but the
-block never landed, so no ADR was ever offered. `init` also writes the block early now as a
-backstop. Bumped to 0.1.7; npm publish + `v0.1.7` tag pending (0.1.6 is the last version live on
-npm). Local suite 67 cases + 11 mutants, validate passes.
+0.1.8: ADRs are named by number alone (`decisions/0018.md`, ADR-0018), so two branches that pick
+the same number hit a git add/add conflict and the second PR can't merge until renumbered. No CI,
+script or hook needed. Raised by a friend testing orient on a team. This repo's 17 ADRs renamed;
+`decide`/`init` on all three ports write `NNNN.md` and still count old `NNNN-title.md` files.
+0.1.7 is live on npm; the installed Claude Code plugin updates per user, so a team only gets the
+clash protection once everyone is on 0.1.8.
 
 ## Shape
 ```mermaid
@@ -34,7 +34,7 @@ flowchart TD
   enforced on publish + CI.
 - `decide` is proactive and keeps architecture.md + a STATE Shape diagram in sync.
 - Published to github.com/Chaitanya299/Orient; installed from the marketplace, dogfooding.
-- Decisions recorded: ADR-0001 through ADR-0017.
+- Decisions recorded: ADR-0001 through ADR-0018.
 - Test suite (ADR-0015): 60 deterministic cases + 10 automated mutants, run locally
   before releases (gitignored, not in CI). Found and fixed on the way in: the installer
   clobbered user-edited command files (later upgraded to a hash-manifest model — untouched
