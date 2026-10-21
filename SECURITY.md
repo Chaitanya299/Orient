@@ -16,7 +16,9 @@ It runs on your machine and reads your repositories, so its security properties 
 - **Injection-resistant.** The agents treat repository content as data to analyze, not
   as instructions to follow — a malicious file in a repo cannot redirect them.
 - **Nothing writes silently.** `init`, `sync`, `decide`, and `commit` draft their output
-  and wait for your approval before writing.
+  and wait for your approval before writing. One exception (ADR-0019): after an update,
+  old `decisions/NNNN-title.md` files are renamed to `NNNN.md` and links to them fixed,
+  only in orient-set-up repos, never mid-merge, staged and never committed.
 - **Minimal footprint.** The Claude Code session-start hook does nothing in a repo that
   hasn't been set up with orient, and always exits cleanly.
 
