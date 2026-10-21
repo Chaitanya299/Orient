@@ -13,6 +13,10 @@ The docs directory is `docs` unless the user named a different one.
 2. Read `git status` and `git diff --stat` for the uncommitted work.
 3. Reconcile the two: move finished items to Done, add new blockers and open
    questions, refresh the `<!-- updated: YYYY-MM-DD -->` marker.
+4. Drift check: if any ADR's `- Date:` in `<docs_dir>/decisions/` is newer than
+   `<docs_dir>/architecture.md`'s `updated:` marker, that decision skipped `decide`'s architecture
+   step (ADR-0020). Say so in the diff and offer to update `architecture.md` and set its marker,
+   as a separate approval.
 
 Show the diff and get approval before writing.
 

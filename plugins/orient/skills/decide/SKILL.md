@@ -35,4 +35,7 @@ the ADR but decline these):
 - the `## Shape` mermaid diagram in `<docs_dir>/STATE.md` — only if the decision adds,
   removes, or reconnects a major component. Keep it to 6 nodes.
 
-Skip whichever target doesn't exist, and skip the whole step for a non-structural decision.
+Skip whichever target doesn't exist, and skip these edits for a non-structural decision.
+Whatever the outcome, set `architecture.md`'s `updated:` marker to today as part of the ADR
+write (show it in the draft). It records that architecture was checked against this decision,
+and the drift warning (ADR-0020) relies on it.

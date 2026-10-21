@@ -17,5 +17,6 @@ Record one architectural decision as a numbered, append-only ADR in `docs/decisi
    update both — each as a before/after preview, written only after a **separate** approval:
    `docs/architecture.md` (affected lines only, refresh `updated:`), and the `## Shape`
    mermaid diagram in `docs/STATE.md` (if a major component was added, removed, or
-   reconnected; 6 nodes max). Skip whichever doesn't exist, and skip all of step 4 for a
-   non-structural decision.
+   reconnected; 6 nodes max). Skip whichever doesn't exist, and skip these edits for a
+   non-structural decision. Either way, set `docs/architecture.md`'s `updated:` marker to today
+   as part of the ADR write (show it in the draft); the drift warning (ADR-0020) relies on it.
