@@ -60,5 +60,3 @@ flowchart TD
 - `architecture.md` is stale (last touched 2026-08-21): it misses the npm installer, the opencode
   and Codex ports and the hooks, because nothing checks for drift. Fix: refresh once by hand, and
   have `sync`/`status` warn when an ADR is newer than its `updated:` marker.
-- `npm test` points at three test files that no longer exist; CLAUDE.md still validates
-  `./plugins/bearings` and uses `BEARINGS` markers.

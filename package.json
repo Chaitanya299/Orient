@@ -7,7 +7,7 @@
     "orient": "bin/orient.mjs"
   },
   "scripts": {
-    "test": "node --test --test-concurrency=1 tests/contracts.test.mjs tests/installer.test.mjs tests/hooks.test.mjs",
+    "test": "node --test --test-concurrency=1 tests/e2e.test.mjs",
     "test:mutation": "node --test --test-concurrency=1 tests/mutation.test.mjs",
     "validate": "claude plugin validate . --strict && claude plugin validate ./plugins/orient --strict",
     "postinstall": "node scripts/postinstall.mjs",
