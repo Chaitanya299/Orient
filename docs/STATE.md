@@ -1,12 +1,11 @@
-# STATE — <!-- updated: 2026-10-20 -->
+# STATE — <!-- updated: 2026-10-21 -->
 
 ## Current focus
-0.1.8: ADRs are named by number alone (`decisions/0018.md`, ADR-0018), so two branches that pick
-the same number hit a git add/add conflict and the second PR can't merge until renumbered. No CI,
-script or hook needed. Raised by a friend testing orient on a team. This repo's 17 ADRs renamed;
-`decide`/`init` on all three ports write `NNNN.md` and still count old `NNNN-title.md` files.
-0.1.7 is live on npm; the installed Claude Code plugin updates per user, so a team only gets the
-clash protection once everyone is on 0.1.8.
+0.1.9: repos set up before 0.1.8 get their `NNNN-title.md` ADRs renamed to `NNNN.md` on
+update (ADR-0019): `scripts/migrate-adrs.sh`, run by the session-start hook (Claude Code) and the
+npm installer (opencode/Codex). Orient repos only, never mid-merge, staged not committed. Builds on
+0.1.8's number-only names (ADR-0018). Old-version teammates are out of scope (2–3 users). 0.1.7
+is the last version on npm; 0.1.8 is live for Claude Code via the marketplace. Publish waits.
 
 ## Shape
 ```mermaid
@@ -34,7 +33,7 @@ flowchart TD
   enforced on publish + CI.
 - `decide` is proactive and keeps architecture.md + a STATE Shape diagram in sync.
 - Published to github.com/Chaitanya299/Orient; installed from the marketplace, dogfooding.
-- Decisions recorded: ADR-0001 through ADR-0018.
+- Decisions recorded: ADR-0001 through ADR-0019.
 - Test suite (ADR-0015): 60 deterministic cases + 10 automated mutants, run locally
   before releases (gitignored, not in CI). Found and fixed on the way in: the installer
   clobbered user-edited command files (later upgraded to a hash-manifest model — untouched

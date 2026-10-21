@@ -57,7 +57,7 @@ sequenceDiagram
   Agent->>Docs: architecture.md, if the structure changed (asks first)
 ```
 
-Every write is a draft first. If you say no, nothing changes.
+Every write is a draft first. If you say no, nothing changes. The one exception is the rename of old-style decision files after an update (see Updating).
 
 ## What it adds to your repo
 
@@ -174,7 +174,7 @@ Most days you'll only touch two: `status` to pick up where you left off, and `de
 - No network and no telemetry. It can't send your code anywhere.
 - The survey and trace agents are read-only. They never open `.env` files or keys.
 - `commit` refuses to commit a `.env` file or a detected key.
-- Every write is shown to you first.
+- Every write is shown to you first, except the one-time rename of old decision files after an update, which is staged, never committed.
 
 Details in [SECURITY.md](./SECURITY.md).
 
@@ -184,6 +184,8 @@ Update, then re-run `init` in each tracked project. The block already in your `C
 
 - **Claude Code:** `claude plugin update orient@chaitanya299-plugins`, restart, then `/orient:init`.
 - **opencode / Codex:** `npx @chaitanya299/orient@latest opencode` (or `codex`), then re-run init.
+
+Repos set up before 0.1.8 have decision files named `0001-title.md`. After you update, orient renames them to `0001.md` on its own: at the next session start in Claude Code, or when the installer runs in the repo for opencode and Codex. It fixes links to them, stages the renames and never commits, so check `git status` and commit them like any change. It only does this in repos with orient's `STATE.md` and markers, never while a merge or rebase is in progress, and it leaves a file alone if its number is already taken.
 
 ## FAQ
 

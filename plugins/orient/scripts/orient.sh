@@ -11,6 +11,8 @@ case "$dd" in /*|*..*) dd=docs ;; esac   # reject absolute / parent-escaping val
 state="${CLAUDE_PROJECT_DIR:-.}/$dd/STATE.md"
 
 if [ -f "$state" ]; then
+  # Rename pre-0.1.8 NNNN-title.md ADRs to NNNN.md (ADR-0019). Silent unless it changes something.
+  sh "$(dirname "$0")/migrate-adrs.sh" "${CLAUDE_PROJECT_DIR:-.}" "$dd" 2>/dev/null
   printf '%s\n' "Orient — current focus (from $dd/STATE.md):"
   awk '/^## Current focus/{f=1;next} /^## /{f=0} f' "$state" 2>/dev/null | head -14
   exit 0

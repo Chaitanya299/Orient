@@ -10,6 +10,7 @@ import { join, dirname } from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 
 const pkg = dirname(dirname(fileURLToPath(import.meta.url))); // package root
 const args = process.argv.slice(2);
@@ -134,6 +135,17 @@ function injectAgentsBlock(projectRoot, block) {
   return "appended the orient block to AGENTS.md";
 }
 
+// Rename pre-0.1.8 `NNNN-title.md` ADRs to `NNNN.md` (ADR-0019). Same script the Claude
+// Code session-start hook runs, so both update paths migrate identically.
+function migrateAdrs(projectRoot) {
+  try {
+    const out = execFileSync("sh", [join(pkg, "plugins/orient/scripts/migrate-adrs.sh"), projectRoot, "docs"], { encoding: "utf8" });
+    for (const line of out.trim().split("\n").filter(Boolean)) console.log(`  ${line}`);
+  } catch {
+    console.log("  (skipped the old-ADR-name check: needs a POSIX sh)");
+  }
+}
+
 function usage() {
   console.log(`orient — never lose the thread of what you're building
 
@@ -161,6 +173,7 @@ switch (target) {
       console.log("  (global install — run /orient-init in each repo to add the AGENTS.md block.)");
     } else {
       console.log(`  ${injectAgentsBlock(process.cwd(), agentsBlock("opencode/commands/orient-init.md", "docs"))}`);
+      migrateAdrs(process.cwd());
     }
     console.log("Done. Restart opencode, then run /orient-init in a repo.");
     break;
@@ -173,6 +186,7 @@ switch (target) {
       console.log("  (global install — run $orient-init in each repo to add the AGENTS.md block.)");
     } else {
       console.log(`  ${injectAgentsBlock(process.cwd(), agentsBlock("codex/skills/orient-init/SKILL.md", "docs"))}`);
+      migrateAdrs(process.cwd());
     }
     console.log("Done. Restart Codex, then run $orient-init in a repo.");
     break;
