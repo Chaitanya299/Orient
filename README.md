@@ -38,8 +38,8 @@ flowchart LR
 
 1. **Run `init` once.** It reads your repo in a read-only subagent, drafts the docs, and turns commits that look like turning points into draft decisions. You keep the ones you want.
 2. **Build as usual.** When you make a real decision, the agent offers to write it down (see below).
-3. **Run `sync` at the end of a session.** `STATE.md` catches up with what you actually did.
-4. **Run `status` next time.** It reads one file and tells you where you left off. In Claude Code, the current focus also prints on its own when a session starts.
+3. **Run `sync` at the end of a session.** On the default branch, `STATE.md` catches up with what you actually did. On any other branch, `sync` writes a small note for that branch instead (`docs/state/<branch>.md`), so two branches never conflict on `STATE.md`; the next `sync` on the default branch folds the merged notes in.
+4. **Run `status` next time.** It tells you where you left off: the team goal, your branch's focus, and what teammates are doing on branches they've pushed. In Claude Code, the same prints on its own when a session starts.
 
 Here's what happens when you make a call mid-session:
 
@@ -64,7 +64,8 @@ Every write is a draft first. If you say no, nothing changes. The one exception 
 ```
 CLAUDE.md or AGENTS.md   about 14 lines of pointers, between ORIENT markers
 docs/
-  STATE.md               done, in progress, blocked, next up (read this first)
+  STATE.md               team goal, done, in progress, blocked, next up (read this first)
+  state/<branch>.md      one note per branch while it's open; folded into STATE.md on the default branch
   architecture.md        entry points and module boundaries
   decisions/             one file per decision (0001.md, 0002.md...), never edited, only superseded
 ```
@@ -146,11 +147,11 @@ The opencode and Codex installers only touch the text between the `ORIENT` marke
 | When | Command | What it does |
 |---|---|---|
 | Once per project | `init` | Sets up the docs and drafts decisions from your git history. |
-| Start of a session | `status` | Tells you where things stand. Reads `STATE.md` and nothing else. |
+| Start of a session | `status` | Tells you where things stand: team goal, your focus, teammates' focus. Reads `STATE.md` and the branch notes, nothing else. |
 | While building | `trace` | Walks one path through the code with `file:line` refs. Saves nothing. |
-| When you decide something | `decide` | Writes the decision and the why. Updates `architecture.md` to match. |
+| When you decide something | `decide` | Writes the decision and the why. Updates `architecture.md` to match on the default branch; on a branch, it leaves the proposal in the branch note. |
 | Before you commit | `commit` | Drafts a what / why / findings commit message for you to review. |
-| End of a session | `sync` | Updates `STATE.md` to match what changed. |
+| End of a session | `sync` | Updates `STATE.md` on the default branch, or your branch's note elsewhere, to match what changed. |
 
 Claude Code uses `/orient:status`, opencode `/orient-status`, Codex `$orient-status`. Same six everywhere.
 
@@ -158,7 +159,7 @@ Most days you'll only touch two: `status` to pick up where you left off, and `de
 
 ## Check that it's working
 
-- Start a new session and run `status`. You should see the current focus from `STATE.md`.
+- Start a new session and run `status`. You should see the team goal from `STATE.md`.
 - Make a choice out loud, like "let's use Postgres for this." The agent should offer to record it. If it doesn't, run `decide` yourself.
 - Want to see real output first? orient tracks itself. Read this repo's [`STATE.md`](./docs/STATE.md), [`architecture.md`](./docs/architecture.md) and [decision log](./docs/decisions).
 

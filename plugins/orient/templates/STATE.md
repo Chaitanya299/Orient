@@ -1,7 +1,7 @@
-# STATE — <!-- updated: YYYY-MM-DD -->
+# STATE
 
 ## Current focus
-<the one thing being worked on right now, in a sentence>
+<the team goal, in a sentence — one line, rarely edited. Each branch's own focus lives in its branch note>
 
 ## Shape
 ```mermaid

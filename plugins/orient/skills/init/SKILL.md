@@ -36,7 +36,8 @@ point is that the survey burns the subagent's context window, not this one.
 
 ## 4. Draft the core docs
 From the survey, draft (do not write yet):
-- `$DOCS_DIR/STATE.md` — from the `templates/STATE.md` shape, `## Current focus` first.
+- `$DOCS_DIR/STATE.md` — from the `templates/STATE.md` shape, `## Current focus` (the team
+  goal) first.
   Fill the `## Shape` mermaid diagram from the survey: the major components and how they
   connect, 6 nodes max. Not a call graph.
 - `$DOCS_DIR/architecture.md` — from `templates/architecture.md`: entry points, module

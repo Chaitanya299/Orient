@@ -1,6 +1,6 @@
 ---
 name: orient-decide
-description: Record an architectural decision as a numbered ADR and update architecture.md to match. Use right after a decision is made in conversation.
+description: Record an architectural decision as a numbered ADR and update architecture.md to match (on the default branch; elsewhere, leave the proposal in the branch note). Use right after a decision is made in conversation.
 ---
 
 # orient-decide
@@ -37,6 +37,12 @@ the ADR but decline these):
   removes, or reconnects a major component. Keep it to 6 nodes.
 
 Skip whichever target doesn't exist, and skip these edits for a non-structural decision.
-Whatever the outcome, set `architecture.md`'s `updated:` marker to today as part of the ADR
-write (show it in the draft). It records that architecture was checked against this decision,
-and the drift warning (ADR-0020) relies on it.
+
+Where they land depends on the branch (ADR-0021; the default-branch rule is the one in the orient-sync skill):
+- **On the default branch:** write them there. Whatever the outcome, set `architecture.md`'s
+  `updated:` marker to today as part of the ADR write (show it in the draft). It records that
+  architecture was checked against this decision, and the drift warning (ADR-0020) relies on it.
+- **On any other branch:** never touch `architecture.md` or `STATE.md`. Put the approved
+  previews into this branch's note `<docs_dir>/state/<file>.md` as `## Architecture (ADR-NNNN)`
+  and `## Shape (ADR-NNNN)`, creating the note from the skeleton in orient-sync if it doesn't exist. the orient-sync skill on the
+  default branch applies them and sets the marker.

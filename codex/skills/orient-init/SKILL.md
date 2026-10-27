@@ -45,7 +45,7 @@ files (`.env*` except `.env.example`, `*.pem`, `*.key`, `id_rsa*`, `credentials`
 
 ## 4. Draft the core docs
 From the survey, draft (do not write yet) these files, using the skeletons at the
-bottom. Fill `<...>` placeholders and date the `updated:` marker.
+bottom. Fill `<...>` placeholders and date `architecture.md`'s `updated:` marker.
 
 - `$DOCS_DIR/STATE.md` — `## Current focus` first; fill the `## Shape` mermaid diagram
   from the survey (major components and how they connect, 6 nodes max, not a call graph).
@@ -100,8 +100,8 @@ The whole flow is a proposal the user approves, not a silent write.
 
 ## Workflow
 
-- Before reporting a task complete: update `$DOCS_DIR/STATE.md`, and if an architectural decision was made with no ADR recorded, offer to record it.
-- When a real architectural decision is made in conversation, proactively offer to record it as an ADR (the orient-decide skill) — don't wait to be asked. It also updates architecture.md.
+- Before reporting a task complete: update `$DOCS_DIR/STATE.md` on the default branch, or `$DOCS_DIR/state/<branch>.md` on any other branch (the orient-sync skill does this), and if an architectural decision was made with no ADR recorded, offer to record it.
+- When a real architectural decision is made in conversation, proactively offer to record it as an ADR (the orient-decide skill) — don't wait to be asked. It also updates `architecture.md` on the default branch; on any other branch it leaves the proposal in the branch note.
 - When a plan is approved before a build, treat any architectural choices inside it as decisions — offer to record them before starting.
 - Never edit a past decision file. Supersede it with a new one.
 - Trace execution paths on demand (the orient-trace skill) instead of maintaining a flow doc.
@@ -111,10 +111,10 @@ The whole flow is a proposal the user approves, not a silent write.
 ### STATE.md
 
 ```markdown
-# STATE — <!-- updated: YYYY-MM-DD -->
+# STATE
 
 ## Current focus
-<the one thing being worked on right now, in a sentence>
+<the team goal, in a sentence — one line, rarely edited. Each branch's own focus lives in its branch note>
 
 ## Shape
 ```mermaid
