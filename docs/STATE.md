@@ -40,9 +40,9 @@ flowchart TD
   was lost because it was never committed.
 
 ## In progress
-- Commit and push 0.1.11 (`main` is already 4 commits ahead of origin; Claude Code users install
-  from GitHub's main), then `git tag v0.1.11 && git push origin v0.1.11` for npm (OIDC trusted
-  publishing on npm not yet confirmed; npm is still on 0.1.7).
+- Publish 0.1.11 to npm: `git tag v0.1.11 && git push origin v0.1.11` runs the publish workflow
+  (OIDC trusted publishing on npm not yet confirmed; npm is still on 0.1.7). `main` is pushed, so
+  Claude Code marketplace users already have 0.1.11.
 
 ## Next up
 - Team gaps from the friend's review, still open (pinned as `[gap]` tests): opposite decisions
